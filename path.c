@@ -1,6 +1,6 @@
 #include"minishell.h"
 
-char	*get_path(char **envp, char *arg)
+char	*get_path(t_env *env, t_args *arg)
 {
 	char	**paths;
 	char	*path;
@@ -15,7 +15,7 @@ char	*get_path(char **envp, char *arg)
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(tmp, arg);
+		path = ft_strjoin(tmp, arg->cmd[0]);
 		free(tmp);
 		if (access(path, F_OK) == 0)
 			return (path);

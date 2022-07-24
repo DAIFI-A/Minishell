@@ -12,6 +12,22 @@
 # include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "libft/libft.h"
+
+typedef struct s_args
+{
+    char    *arg;
+    char    **cmd;
+    char    **path;
+    char    *str;
+}   t_args;
+
+typedef struct s_env
+{
+    char    *key;
+    char    *value;
+    struct env  *next;
+}   t_env;
 
 char	*get_path(char **envp, char *arg);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
