@@ -18,7 +18,7 @@ typedef struct s_args
 {
     char    *arg;
     char    **cmd;
-    char    **path;
+    char    **paths;
     char    *str;
 }   t_args;
 
@@ -26,7 +26,7 @@ typedef struct s_env
 {
     char    *key;
     char    *value;
-    struct env  *next;
+    struct s_env  *next;
 }   t_env;
 
 char	*get_path(char **envp, char *arg);
@@ -37,5 +37,12 @@ char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
+void	pwd_env(t_env *env);
+void	echo(t_env *env, char **cmd, t_args *arg);
+void	cd_home(t_env *env, t_args *arg);
+void	cd(t_env *env, char *str, t_args *arg);
+void	ft_lstadd_back_prime(t_env **lst, t_env *node);
+t_env	*ft_lst_new1(char *key, char *value);
+void	env_env(t_env *env);
 
 #endif

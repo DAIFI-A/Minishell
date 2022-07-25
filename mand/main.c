@@ -1,4 +1,4 @@
-#include"minishell.h"
+#include"../minishell.h"
 
 void	check_path(t_env *env, t_args *arg)
 {
@@ -13,7 +13,7 @@ void	check_path(t_env *env, t_args *arg)
 		{
 			if (lst->value)
 			{
-				arg->path = ft_split(lst->value, ':');
+				arg->paths = ft_split(lst->value, ':');
 				i = 1;
 			}
 			break ;
@@ -32,20 +32,20 @@ int	check_type(t_env *env, char *arg)
 	char	**splited;
 	int		id;
 
-	splited = ft_split(str, ' ');
-	if (!ft_strncmp(splited[0], "pwd"))
+	splited = ft_split(arg, ' ');
+	if (!ft_strncmp(splited[0], "pwd", 3))
 		return (1);
-	else if (!ft_strncmp(splited[0], "export"))
+	else if (!ft_strncmp(splited[0], "export", 6))
 		return (1);
-	else if (!ft_strncmp(splited[0], "unset"))
+	else if (!ft_strncmp(splited[0], "unset", 5))
 		return (1);
-	else if (!ft_strncmp(splited[0], "env"))
+	else if (!ft_strncmp(splited[0], "env", 3))
 		return (1);
-	else if (!ft_strncmp(splited[0], "exit"))
+	else if (!ft_strncmp(splited[0], "exit", 4))
 		return (1);
-	else if (!ft_strncmp(splited[0], "cd"))
+	else if (!ft_strncmp(splited[0], "cd", 2))
 		return (1);
-	else if (!ft_strncmp(splited[0], "echo"))
+	else if (!ft_strncmp(splited[0], "echo", 4))
 		return (1);
 	return (0);
 }
@@ -54,27 +54,37 @@ void	builting(t_env *env, t_args *arg)
 {
 	char	**cmd;
 
-	cmd = ft_split(arg->str, ' ');
-	else if (!ft_strncmp(cmd[0], "pwd"))
-		pwd(env);
-	else if (!ft_strncmp(cmd[0], "cd"))
+	cmd = ft_split(*(arg->cmd), ' ');
+	if (!ft_strncmp(cmd[0], "pwd", 3))
+		pwd_env(env);
+	else if (!ft_strncmp(cmd[0], "cd", 2))
 		cd(env, cmd[1], arg);
-	else if (!ft_strncmp(cmd[0], "unset"))
-		unset(env);
-	else if (!ft_strncmp(cmd[0], "echo"))
+	// else if (!ft_strncmp(cmd[0], "unset", 5))
+	// 	unset(env);
+	else if (!ft_strncmp(cmd[0], "echo", 4))
 		echo(env, cmd, arg);
-	else if (!ft_strncmp(cmd[0], "export"))
-		export_env(&env, arg, cmd);
-	else if (!ft_strncmp(cmd[0], "env"))
-		env(&env, arg, cmd);
-	else if (!ft_strncmp(cmd[0], "exit"))
-	{
-		if (cmd[1] != NULL)
-			exit0(env, arg);
-		else
-			exit1(env, arg);
-	}
+	// else if (!ft_strncmp(cmd[0], "export", 6))
+	// 	export_env(&env, arg, cmd);
+	else if (!ft_strncmp(cmd[0], "env", 3))
+		env_env(env);
+	// else if (!ft_strncmp(cmd[0], "exit", 4))
+	// {
+	// 	if (cmd[1] != NULL)
+	// 		exit0(env, arg);
+	// 	else
+	// 		exit1(env, arg);
+	//}
 
+}
+
+void	env_env(t_env *env)
+{
+	while(env)
+	{
+		if (env->key && env->value)
+			printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
 }
 
 void	echo(t_env *env, char **cmd, t_args *arg)
@@ -90,7 +100,7 @@ void	echo(t_env *env, char **cmd, t_args *arg)
 			i = 2;
 			while (cmd[i])
 			{
-				output = ft_strjoin(output, cmd[i])
+				output = ft_strjoin(output, cmd[i]);
 				i++;
 			}
 			printf("%s", output);
@@ -100,21 +110,22 @@ void	echo(t_env *env, char **cmd, t_args *arg)
 		{
 			while (cmd[i])
 			{
-				output = ft_strjoin(output, cmd[i])
+				output = ft_strjoin(output, cmd[i]);
 				i++;
 			}
 			printf("%s\n", output);
 		}
+	}
 }
 
-void	pwd(t_env *env)
+void	pwd_env(t_env *env)
 {
-	char	cwd[1024];
+	char	*cwd;
 
-	if (!(getcwd(cwd, sizeof(cwd)))
+	if (getcwd(cwd, 9999))
 		ft_putendl_fd(cwd, 1);
 	else
-		ft_putendl_fd("Unable to get working directory");
+		ft_putendl_fd("Unable to get working directory", 2);
 }
 
 void	cd_home(t_env *env, t_args *arg)
@@ -124,29 +135,28 @@ void	cd_home(t_env *env, t_args *arg)
 	char	*old_pwd;
 	char	*pwd;
 
-	while (lst)
+	lst = env;
+	while (env)
 	{
-		if (!ft_strncmp(lst->key, "HOME"))
+		if (!ft_strncmp(env->key, "HOME", 5))
 		{
-			if (chdir(lst->value))
+			if (chdir(env->value))
 			{
 				ft_putendl_fd("Home not set", 1);
 				return ;
 			}
-			home = lst->value;
+			home = env->value;
 			break ;
 		}
-		if (!home == NULL)
-			ft_putendl_fd("Command not found", 1);
-		lst = lst->next;
+		env = env->next;
 	}
 	lst = env;
 	while (lst)
 	{
-		if (!ft_strcmp(lst->key, "PWD"))
+		if (!ft_strncmp(lst->key, "PWD", 3))
 		{
 			if (lst->value)
-				OLDPWD = lst->value;
+				old_pwd = lst->value;
 			lst->value = home;
 			break ;
 		}
@@ -155,9 +165,9 @@ void	cd_home(t_env *env, t_args *arg)
 	lst = env;
 	while (lst)
 	{
-		if (!ft_strcmp(lst->key, "OLDPWD"))
+		if (!ft_strncmp(lst->key, "OLDPWD", 6))
 		{
-			lst->value = home;
+			lst->value = old_pwd;
 			break ;
 		}
 		lst = lst->next;
@@ -167,15 +177,16 @@ void	cd_home(t_env *env, t_args *arg)
 void	cd(t_env *env, char *str, t_args *arg)
 {
 	char	*old_pwd;
-	char	*cwd;
+	char	cwd[1024];
+	t_env	*lst;
 
 	old_pwd = NULL;
-	cwd = NULL;
+	lst = env;
 	if (str == NULL)
-		cd_home(env, arg)
+		cd_home(env, arg);
 	else 
 	{
-		old_pwd = getcwd(cwd, 9999));
+		old_pwd = getcwd(cwd, sizeof(cwd));
 		if (chdir(str))
 		{
 			ft_putendl_fd("No such file or directory", 2);
@@ -185,12 +196,11 @@ void	cd(t_env *env, char *str, t_args *arg)
 		lst = env;
 		while (lst)
 		{
-			if (!ft_strcmp(lst->key, "PWD"))
+			if (!ft_strncmp(lst->key, "PWD", 3))
 			{
 				if (lst->value)
 					old_pwd = lst->value;
-				cwd = NULL;
-				lst->value = getcwd(cwd, 9999);
+				lst->value = getcwd(cwd, sizeof(cwd));
 				break ;
 			}
 			lst = lst->next;
@@ -198,7 +208,7 @@ void	cd(t_env *env, char *str, t_args *arg)
 		lst = env;
 		while (lst)
 		{
-			if (!ft_strcmp(lst->key, "OLDPWD"))
+			if (!ft_strncmp(lst->key, "OLDPWD", 6))
 			{
 				lst->value = old_pwd;
 				break ;
@@ -208,22 +218,22 @@ void	cd(t_env *env, char *str, t_args *arg)
 	}
 }
 
-void	export_env(t_env *env, t_args *arg, char **str)
-{
-	//problem if we put just "export something" without = value; 
-	int		i;
-	t_env	*lst;
+// void	export_env(t_env *env, t_args *arg, char **str)
+// {
+// 	//problem if we put just "export something" without = value; 
+// 	int		i;
+// 	t_env	*lst;
 
-	i = 1;
-	lst = env;
-	if (str[i])
-	{
-		if (!lst)
-			lst = ft_lstnew(str[i])
-		else
-			ft_lstadd_back(lst, str[i]);
-	}
-}
+// 	i = 1;
+// 	lst = env;
+// 	if (str[i])
+// 	{
+// 		if (!lst)
+// 			lst = ft_lstnew(str[i]);
+// 		else
+// 			ft_lstadd_back(str[i], lst);
+// 	}
+// }
 
 int	one_cmd(t_env *env, t_args *arg)
 {
@@ -237,7 +247,7 @@ int	one_cmd(t_env *env, t_args *arg)
 		i = 0;
 		if (check_type(env, arg->cmd[i]))
 		{
-			builting(env, arg->cmd[i]);
+			builting(env, arg);
 			return (1);
 		}
 	}
@@ -252,7 +262,7 @@ void	check_cmd(t_env *env, t_args *arg)
 	int		i;
 
 	i = 0;
-	check_path(env, arg);
+//	check_path(env, arg);
 	if (one_cmd(env, arg))
 		return ;
 }
@@ -279,39 +289,42 @@ char	*get_keys(char *str, int c)
 	return (0);
 }
 
-void	create_env(t_env **env, char **envp, int i)
+t_env	*create_env(char **envp)
 {
 	t_env	*lst;
 	char	*value;
-	char	*key
-	int		j;
+	char	*key;
+	t_env	*env;
+	int 	i;
 
-	j = 0;
-	*env = NULL;
-	lst = NULL;
-	while (i > 0)
+	i = 0;
+	env = (t_env *)malloc(sizeof(t_env));
+	lst = env;
+	if (!env || !lst)
+		printf("unable to allocate memory");
+	while (envp[i] != NULL)
 	{
-		value = ft_strdup(envp[j]);
+		value = ft_strdup(envp[i]);
 		value = ft_strchr(value, '=') + 1;
-		key = ft_strdup(envp[j]);
+		key = ft_strdup(envp[i]);
 		key = get_keys(key, '=');
-		lst = ft_lstnew(key, value);
-		ft_lstadd_back(env, lst);
-		j++;
-		i--;
+		if (value && key)
+			lst = ft_lst_new1(key, value);
+		ft_lstadd_back_prime(&env, lst);
+		i++;
 	}
+	return(env);
 }
 
 int main(int argc, char const *argv[], char *envp[])
 {
-	t_args	arg;
-	t_env	env;
+	t_args	*arg;
+	t_env	*env;
 	int		i;
 	
 	i = 0;
-	while (envp[i])
-		i++;
-	create_env(&env, envp, i);
+	arg = (t_args *)malloc(sizeof(t_args));
+	env = create_env(envp);
 	while(1)
 	{
 		arg->str = readline("Minishell> ");
