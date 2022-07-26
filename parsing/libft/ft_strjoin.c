@@ -6,10 +6,11 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:48:10 by med-doba          #+#    #+#             */
-/*   Updated: 2022/07/26 18:56:50 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/07/26 20:15:17 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
