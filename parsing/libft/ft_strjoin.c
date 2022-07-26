@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:48:10 by med-doba          #+#    #+#             */
-/*   Updated: 2021/11/27 10:56:09 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:56:50 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

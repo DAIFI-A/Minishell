@@ -14,11 +14,13 @@ void	ft_sighandler(int sig)
 void	ft_handle()
 {
 	char	*rtn;
-	t_lexer *lexer = NULL;
+	t_lexer *lexer;
+	int	i;
 
+	i = 0;
 	while (1)
 	{
-		rtn = readline("MiniShell>");
+		rtn = readline("MiniShell>$");
 		if (rtn == NULL)
 		{
 			printf("exit\n");
@@ -26,6 +28,7 @@ void	ft_handle()
 			exit(0);
 		}
 		add_history(rtn);
+		lexer = ft_lstnew(rtn, 0);
 		ft_lexer(rtn, lexer);
 		free(rtn);
 	}
