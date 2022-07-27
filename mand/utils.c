@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 14:30:18 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/25 16:10:11 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/07/27 17:59:03 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_env	*ft_lst_new1(char *key, char *value)
 {
 	t_env	*lst;
 
-	lst = malloc(sizeof(t_env));
+	lst = (t_env *)malloc(sizeof(t_env));
 	if (!lst)
 		return (NULL);
 	lst->key = key;
@@ -31,10 +31,12 @@ void	ft_lstadd_back_prime(t_env **lst, t_env *node)
 
 	head = *lst;
 	if (!head)
-		head = node;
+	{
+		*lst = node;
+	}
 	else
 	{
-		while (head->next != NULL)
+		while (head->next)
 			head = head->next;
 		head->next = node;
 	}

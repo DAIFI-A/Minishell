@@ -29,7 +29,8 @@ typedef struct s_env
     struct s_env  *next;
 }   t_env;
 
-char	*get_path(char **envp, char *arg);
+char	*get_path(t_env *env, t_args *arg);
+char	*get_keys(char *str, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 char	**ft_split(char const *s, char c);
@@ -38,11 +39,13 @@ void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	pwd_env(t_env *env);
+void	export_env(t_env *env, t_args *arg, char **str);
 void	echo(t_env *env, char **cmd, t_args *arg);
 void	cd_home(t_env *env, t_args *arg);
 void	cd(t_env *env, char *str, t_args *arg);
 void	ft_lstadd_back_prime(t_env **lst, t_env *node);
 t_env	*ft_lst_new1(char *key, char *value);
+void    unset_env(t_env *env, char **str);
 void	env_env(t_env *env);
 
 #endif

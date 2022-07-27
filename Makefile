@@ -2,7 +2,7 @@ SRCS = main.c parse.c path.c utils.c
 SRCDIR = mand
 OBJS_DIR = objs
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =  -g -Wall -Wextra -Werror -fsanitize=address
 NAME = mini
 LIB = libft/libft.a
 OBJS := $(SRCS:%.c=$(OBJS_DIR)/%.o)
@@ -20,7 +20,7 @@ $(NAME): $(LIB) $(OBJS)
 	$(CC) $(CFLAGS) $^ -L $(shell brew --prefix readline)/lib -lreadline -o $(NAME) $(LIB)
 
 $(LIB) :
-	make -C libft
+	make bonus -C libft
 
 clean:
 	@rm -rf $(OBJS_DIR)

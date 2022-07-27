@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 00:57:32 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/24 20:35:20 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/26 10:19:46 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	**word_maker(char **tab, char const *str, int size, char c)
 		else
 			str++;
 	}
-	tab[size] = str;
+	tab[size] = NULL;
 	return (tab);
 }
 

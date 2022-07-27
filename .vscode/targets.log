@@ -8,10 +8,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Jul 25 19:40:39 2022
+# Make data base, printed on Wed Jul 27 18:51:43 2022
 
 # Variables
- 
 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
@@ -34,7 +33,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 5)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
@@ -42,15 +41,13 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 8)
 OBJS := objs/main.o objs/parse.o objs/path.o objs/utils.o
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cc8w003327/T/vscode-ipc-5e9c50d3-42b9-4fec-b89b-25f1adbd8576.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cc8w003327/T/vscode-ipc-9e3f2991-9913-41fb-85be-7d41df1a5bec.sock
 # environment
 VSCODE_CWD = /
 # environment
 PATH = /Users/adaifi/goinfre/homebrew/bin:/Users/adaifi/goinfre/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/adaifi/goinfre/.brew/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
-# environment
-LaunchInstanceID = 688279A5-D99E-4A8A-9BE4-E2B822A578EE
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -60,7 +57,7 @@ LIB = libft/libft.a
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.xjHlxYqMuj/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.JUrsdFH2Fn/Listeners
 # makefile (from `Makefile', line 2)
 SRCDIR = mand
 # automatic
@@ -132,7 +129,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000001.Electron
+XPC_SERVICE_NAME = com.microsoft.VSCode.1148
 # makefile (from `Makefile', line 3)
 OBJS_DIR = objs
 # automatic
@@ -141,8 +138,6 @@ OBJS_DIR = objs
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x18C47:0x0:0x0
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # environment
@@ -153,8 +148,6 @@ HOMEBREW_NO_AUTO_UPDATE = 1
 PAGER = less
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186a8
 # automatic
 ^F = $(notdir $^)
 # default
@@ -166,10 +159,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 939
+VSCODE_PID = 28179
 # variable set hash-table stats:
- 
-# Load=77/1024=8%, Rehash=0, Collisions=4/115=3%
+# Load=74/1024=7%, Rehash=0, Collisions=4/112=4%
 
 # Pattern-specific Variable Values
 
@@ -190,7 +182,7 @@ VSCODE_PID = 939
 objs/main.o: mand/main.c minishell.h | objs
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `main'
-#  Last modified 2022-07-25 18:35:35
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -202,7 +194,7 @@ objs/main.o: mand/main.c minishell.h | objs
 # Not a target:
 mand/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 18:35:34
+#  Last modified 2022-07-27 18:50:27
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -226,7 +218,7 @@ all: mini
 objs/path.o: mand/path.c minishell.h | objs
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `path'
-#  Last modified 2022-07-25 17:26:02
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -238,7 +230,7 @@ objs/path.o: mand/path.c minishell.h | objs
 # Not a target:
 mand/path.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 16:07:20
+#  Last modified 2022-07-27 12:49:39
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -253,7 +245,7 @@ mand/path.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 16:06:22
+#  Last modified 2022-07-27 18:51:19
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -261,7 +253,7 @@ Makefile:
 
 objs:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-25 18:35:35
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 14):
@@ -270,11 +262,11 @@ objs:
 
 libft/libft.a:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-25 13:51:15
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 23):
-	make -C libft
+	make bonus -C libft
 	
 
 fclean: clean
@@ -290,7 +282,7 @@ fclean: clean
 objs/parse.o: mand/parse.c minishell.h | objs
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `parse'
-#  Last modified 2022-07-25 17:26:02
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -302,7 +294,7 @@ objs/parse.o: mand/parse.c minishell.h | objs
 objs/utils.o: mand/utils.c minishell.h | objs
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `utils'
-#  Last modified 2022-07-25 17:26:02
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -323,10 +315,11 @@ mand/parse.c:
 # Not a target:
 mand/utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 16:10:11
+#  Last modified 2022-07-27 17:59:03
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
+ 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
@@ -337,7 +330,7 @@ mand/utils.c:
 
 mini: libft/libft.a objs/main.o objs/parse.o objs/path.o objs/utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-25 18:35:35
+#  Last modified 2022-07-27 18:51:27
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -365,7 +358,7 @@ clean:
 # Not a target:
 minishell.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 17:26:01
+#  Last modified 2022-07-27 17:55:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -384,6 +377,6 @@ minishell.h:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jul 25 19:40:39 2022
+# Finished Make data base on Wed Jul 27 18:51:43 2022
 
  

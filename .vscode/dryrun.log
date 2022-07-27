@@ -1,16 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/adaifi/Desktop/minishell'
-make -C libft
-mkdir objs
- 
-clang -c -I /goinfre/adaifi/homebrew/opt/readline/include mand/main.c -o objs/main.o
- 
-clang -c -I /goinfre/adaifi/homebrew/opt/readline/include mand/parse.c -o objs/parse.o
- 
-clang -c -I /goinfre/adaifi/homebrew/opt/readline/include mand/path.c -o objs/path.o
- 
-clang -c -I /goinfre/adaifi/homebrew/opt/readline/include mand/utils.c -o objs/utils.o
- 
-clang -Wall -Wextra -Werror libft/libft.a objs/main.o objs/parse.o objs/path.o objs/utils.o -L /goinfre/adaifi/homebrew/opt/readline/lib -lreadline -o mini libft/libft.a
+make: Nothing to be done for `all'.
 make: Leaving directory `/Users/adaifi/Desktop/minishell'
  
