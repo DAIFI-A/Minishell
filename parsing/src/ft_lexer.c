@@ -6,45 +6,14 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:35:27 by med-doba          #+#    #+#             */
-/*   Updated: 2022/07/26 19:03:54 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/07/27 19:00:12 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	ft_check_case(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (2);
-	else if (c == '\0')
-		return (-1);
-	else if (c == '<' || c == '>' || c == '|')
-		return (1);
-	else
-		return (0);
-}
 
-char	*ft_strjoin_free(char const *s1, char const *s2)
-{
-	char			*ptr;
-	size_t			x;
-	size_t			y;
-	size_t			t;
-
-	if (!s1 || !s2)
-		return (NULL);
-	y = ft_strlen(s1) + 1;
-	x = ft_strlen(s2);
-	t = y + x;
-	ptr = malloc((y + x + 1) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	ft_memcpy(ptr, s1, y);
-	ft_strlcat(ptr, s2, t);
-	free((void *)s1);
-	return (ptr);
-}
-void	ft_lexer(char *str, t_lexer *lexer)
+void	ft_lexer(char *str, t_lexer **lexer)
 {
 	int				i;
 	char			*tmp;
@@ -60,15 +29,52 @@ void	ft_lexer(char *str, t_lexer *lexer)
 			stock = ft_strdup("");
 			while (ft_check_case(str[i]) == 0)
 			{
+				if ((str[i] == '"' || str[i] == '\''))
+				{
+					if (str[i] == '\'')
+					{
+						i++;
+						while (str[i] && str[i] != '\'')
+						{
+							tmp = ft_char_to_str(str[i]);
+							stock = ft_strjoin(stock, tmp);
+							free(tmp);
+							i++;
+						}
+						if (str[i] == '\0')
+						{
+							printf("Error quots \'\n");
+							exit (1);
+						}
+						i++;
+						break ;
+					}
+					else if (str[i] == '"')
+					{
+						i++;
+						while (str[i] && str[i] != '"')
+						{
+							tmp = ft_char_to_str(str[i]);
+							stock = ft_strjoin(stock, tmp);
+							free(tmp);
+							i++;
+						}
+						if (str[i] == '\0')
+						{
+							printf("Error quots '\"' \n");
+							exit (1);
+						}
+						i++;
+						break ;
+					}
+				}
 				tmp = ft_char_to_str(str[i]);
-				stock = ft_strjoin_free(stock, tmp);
+				stock = ft_strjoin(stock, tmp);
 				free(tmp);
 				i++;
 			}
-			node = ft_lstnew(stock, 1);
-			ft_lstadd_back(&lexer, node);
-			free(tmp);
-			free(stock);
+			node = ft_lstnew(stock);
+			ft_lstadd_back(lexer, node);
 		}
 		if(ft_check_case(str[i]) == 1)
 		{
@@ -77,19 +83,21 @@ void	ft_lexer(char *str, t_lexer *lexer)
 			{
 				tmp = ft_char_to_str(str[i]);
 				stock = ft_strjoin(stock, tmp);
+				free(tmp);
 				i++;
 			}
-			node = ft_lstnew(stock, 1);
-			ft_lstadd_back(&lexer, node);
-			free(tmp);
-			free(stock);
+			if (ft_check_stock(stock) == 1)
+				break ;
+			// printf("stock = %s\n", stock);
+			// exit(1);
+			node = ft_lstnew(stock);
+			ft_lstadd_back(lexer, node);
 		}
 		if (ft_check_case(str[i]) == 2)
 			i = ft_skip_withespace(str, i);
 		if (ft_check_case(str[i]) == -1)
 			break ;
 	}
-	return ;
 }
 
 int	ft_skip_withespace(char *str, int i)
@@ -107,4 +115,16 @@ char	*ft_char_to_str(char c)
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
+}
+
+int	ft_check_case(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (2);
+	else if (c == '\0')
+		return (-1);
+	else if (c == '<' || c == '>' || c == '|')
+		return (1);
+	else
+		return (0);
 }

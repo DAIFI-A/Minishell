@@ -15,9 +15,7 @@ void	ft_handle()
 {
 	char	*rtn;
 	t_lexer *lexer;
-	int	i;
 
-	i = 0;
 	while (1)
 	{
 		rtn = readline("MiniShell>$");
@@ -28,8 +26,9 @@ void	ft_handle()
 			exit(0);
 		}
 		add_history(rtn);
-		lexer = ft_lstnew(rtn, 0);
-		ft_lexer(rtn, lexer);
+		lexer = NULL;
+		ft_lexer(rtn, &lexer);
+		// ft_parser(lexer, rtn);
 		free(rtn);
 	}
 }
