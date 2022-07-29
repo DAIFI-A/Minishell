@@ -44,8 +44,8 @@ void	echo(t_env *env, char **cmd, t_args *arg);
 void	cd_home(t_env *env, t_args *arg);
 void	cd(t_env *env, char *str, t_args *arg);
 void	ft_lstadd_back_prime(t_env **lst, t_env *node);
-t_env	*ft_lst_new1(char *key, char *value);
-void    unset_env(t_env *env, char **str);
+t_env   *ft_lst_new1(char *key, char *value);
+t_env   *unset_env(t_env *env, char **str);
 void	env_env(t_env *env);
 
 #endif

@@ -1,5 +1,18 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/adaifi/Desktop/minishell'
-make: Nothing to be done for `all'.
+ 
+make bonus -C libft
+mkdir objs
+clang -c -I /include mand/main.c -o objs/main.o
+clang -c -I /include mand/parse.c -o objs/parse.o
+clang -c -I /include mand/path.c -o objs/path.o
+clang -c -I /include mand/utils.c -o objs/utils.o
+clang -g -Wall -Wextra -Werror -fsanitize=address libft/libft.a objs/main.o objs/parse.o objs/path.o objs/utils.o -L /lib -lreadline -o mini libft/libft.a
 make: Leaving directory `/Users/adaifi/Desktop/minishell'
  
+make: brew: Command not found
+make: brew: Command not found
+make: brew: Command not found
+make: brew: Command not found
+make: brew: Command not found
+

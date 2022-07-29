@@ -60,7 +60,7 @@ void	builting(t_env *env, t_args *arg)
 	else if (!ft_strncmp(cmd[0], "cd", 3))
 		cd(env, cmd[1], arg);
 	else if (!ft_strncmp(cmd[0], "unset", 6))
-		unset_env(env, cmd);
+		env = unset_env(env, cmd);
 	else if (!ft_strncmp(cmd[0], "echo", 5))
 		echo(env, cmd, arg);
 	else if (!ft_strncmp(cmd[0], "export", 7))
@@ -232,7 +232,9 @@ void	cd(t_env *env, char *str, t_args *arg)
 
 void	export_env(t_env *env, t_args *arg, char **str)
 {
+	//export a=b b=c c=d d=e e=f => SGV
 	//problem if we put just "export something" without = value; 
+	//export a=b then export a+=abe => output : a=babe
 	int		i;
 	t_env	*lst;
 	char	*value;
@@ -248,7 +250,7 @@ void	export_env(t_env *env, t_args *arg, char **str)
 				printf("declare -x %s=\"%s\"\n", env->key, env->value);
 			env = env->next;
 		}
-	}
+	} 
 	while (str[i])
 	{
 		while (env && str[i])
@@ -256,7 +258,7 @@ void	export_env(t_env *env, t_args *arg, char **str)
 			if (env->key)
 			{
 				key = ft_strdup(str[i]);
-				key = get_keys(key, '=');
+				key = ft_strrchr(key, '=');
 				if (!key)
 					return ;
 				if (!ft_strncmp(key, env->key, ft_strlen(env->key)))
@@ -297,14 +299,14 @@ int	one_cmd(t_env *env, t_args *arg, char *envp[])
 			return (1);
 		}
 		else
-			execve(get_path(env, arg), &arg->cmd[i], envp);
+			execvp(arg->cmd[i], &arg->cmd[i]);
 	}
 	else if (i == 0)
 		return (1);
 	return (0);
 }
 
-void unset_env(t_env *env, char **str)
+t_env	*unset_env(t_env *env, char **str)
 {
 	int		i;
 	char	*key;
@@ -341,7 +343,7 @@ void unset_env(t_env *env, char **str)
 		tmp = NULL;
 		i++;
 	}
-	env_env(env);
+	return (env);
 }
 
 void	check_cmd(t_env *env, t_args *arg, char	*envp[])
