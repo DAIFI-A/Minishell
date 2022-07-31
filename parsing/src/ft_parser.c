@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/07/27 18:58:22 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:56:06 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,60 @@ int	ft_check_stock(char *str)
 	if (count1 > 2 || count2 > 2 || count3 > 2)
 		return (1);
 	return (0);
+}
+
+// int	ft_check_pipe(char *str)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if ()
+// 	}
+// }
+int ft_ft(char *str)
+{
+	int	i;
+	int	j;
+	int	yes;
+	i = 0;
+	j = 0;
+	yes = 1;
+	i = ft_skip_withespace(str, i);
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			while (str[i] == '"')
+			{
+				i++;
+				while (str[i] != '"')
+				{
+					i++;
+				}
+				if (str[i + 1] == '"')
+					i++;
+
+			}
+			while(str[i] == '\'')
+			{}
+		}
+		if (str[i] == '|')
+		{}
+		if (str[i] == '<' || str[i] == '>')
+		{}
+		i++;
+	}
+}
+
+char	*ft_skip_quotes(t_lexer **lexer, char *str, char c, int i)
+{
+	char	*rtn;
+
+	rtn = 
+	while (str[i] != c)
+	{
+		i++;
+	}
 }

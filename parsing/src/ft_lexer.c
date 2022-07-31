@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:35:27 by med-doba          #+#    #+#             */
-/*   Updated: 2022/07/27 19:00:12 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/07/31 18:41:04 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void	ft_lexer(char *str, t_lexer **lexer)
 			}
 			if (ft_check_stock(stock) == 1)
 				break ;
-			// printf("stock = %s\n", stock);
-			// exit(1);
 			node = ft_lstnew(stock);
 			ft_lstadd_back(lexer, node);
 		}
