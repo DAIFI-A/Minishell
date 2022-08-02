@@ -6,45 +6,98 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/01 19:13:21 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/02 13:40:38 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
+int	ft_check_case_2(char c)
+{
+	if (c == '\0')
+		return (-1);
+	else if (c == '<' || c == '>' || c == '|')
+		return (1);
+	else if (c == ' ' || c == '\t')
+		return (2);
+	else if (c == '"' || c == '\'')
+		return (3);
+	else
+		return (0);
+}
+
 void	ft_parser(t_lexer *lexer, char *str)
 {
-	int	i;
-	int	j;
-	int	yes;
+	int		i;
+	char	*stock;
+	char	*tmp;
+	t_lexer	*node;
+
 	i = 0;
-	j = 0;
-	yes = 1;
 	i = ft_skip_withespace(str, i);
+	printf("start\n");
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if (ft_check_case_2(str[i]) == 0 || ft_check_case_2(str[i]) == 3)
 		{
-			while (str[i] == '"')
+			if (str[i] == '"' || str[i] == '\'')
 			{
-				i++;
-				while (str[i] != '"')
+				stock = ft_scan_quotes(str, str[i], &i);
+				if (stock == NULL)
 				{
+					printf("error_ft_scan_quotes\n");
+					return ;
+				}
+				node = ft_lstnew(stock);
+				ft_lstadd_back(&lexer, node);
+				free(stock);
+			}
+			if (ft_check_case_2(str[i]) == 0)
+			{
+				stock = ft_strdup("");
+				while (ft_check_case_2(str[i]) == 0)
+				{
+					tmp = ft_char_to_str(str[i]);
+					stock = ft_strjoin(stock, tmp);
+					free(tmp);
 					i++;
 				}
-				if (str[i + 1] == '"')
-					i++;
-
+				node = ft_lstnew(stock);
+				ft_lstadd_back(&lexer, node);
+				free(stock);
 			}
-			while(str[i] == '\'')
-			{}
 		}
-		if (str[i] == '|')
-		{}
-		if (str[i] == '<' || str[i] == '>')
-		{}
-		i++;
+		else if (str[i] == '|')
+		{
+			stock = ft_scan_pipe(str, str[i], &i);
+			if (stock == NULL)
+			{
+				printf("error_ft_scan_quotes\n");
+				return ;
+			}
+			node = ft_lstnew(stock);
+			ft_lstadd_back(&lexer, node);
+			free(stock);
+		}
+		else if (str[i] == '<' || str[i] == '>')
+		{
+			stock = ft_scan_redirection(str, &i, str[i]);
+			if (stock == NULL)
+			{
+				printf("error_ft_scan_quotes\n");
+				return ;
+			}
+			node = ft_lstnew(stock);
+			ft_lstadd_back(&lexer, node);
+			free(stock);
+		}
+		else
+			i++;
+		i = ft_skip_withespace(str, i);
+		if (str[i] == '\0')
+			break ;
 	}
+	printf("end\n");
 }
 
 int	ft_scan(char *rtn)
@@ -113,11 +166,12 @@ char	*ft_scan_pipe(char *str, char c, int *i)
 	}
 	tmp = ft_char_to_str(str[*i]);
 	rtn = ft_strjoin(rtn, tmp);
+	(*i)++;
 	free(tmp);
 	return (rtn);
 }
 
-char	*ft_scan_redirection(char *rtn, int *i, char c)
+char	*ft_scan_redirection(char *str, int *i, char c)
 {
 	char	*rtn;
 	char	*tmp;
@@ -125,48 +179,64 @@ char	*ft_scan_redirection(char *rtn, int *i, char c)
 
 	count = 0;
 	rtn = ft_strdup("");
-	while (rtn[*i] == c)
+	while (str[*i] == c)
 	{
-		if (count == 3 || rtn[*i] == '\0')
+		if (count == 2 || str[*i] == '\0' || str[*i + 1] == '\0')
 		{
+
 			free(rtn);
 			printf("error_redirection\n");
 			return (NULL);
 		}
-		tmp = ft_char_to_str(rtn[*i]);
+		tmp = ft_char_to_str(str[*i]);
 		rtn = ft_strjoin(rtn, tmp);
 		free(tmp);
 		(*i)++;
+		if (str[*i] == ' ' || str[*i] == '\t')
+		{
+			(*i) = ft_skip_withespace(str, *i);
+			if (str[*i] == c)
+			{
+				free(rtn);
+				printf("error_redirection_space\n");
+				return (NULL);
+			}
+		}
 		count++;
 	}
 	return (rtn);
 }
 
-char	*ft_scan_quotes(t_lexer **lexer, char *str, char c, int *i)
+char	*ft_scan_quotes(char *str, char c, int *i)
 {
 	char	*rtn;
 	char	*tmp;
 
 	rtn = ft_strdup("");
+	(*i)++;
 	while (1)
 	{
 		if (str[*i] == c)
 		{
-			*i++;
-			if (str[*i] && (str[*i] == '"' || str[*i] == '\'' || str[*i] != ' ' || str[*i] != '\t'))
+			(*i)++;
+			if (str[*i] && (str[*i] == '"' || str[*i] == '\'' ) && (str[*i] != ' ' && str[*i] != '\t'))
 			{
 				if (str[*i] == '"')
-					rtn = ft_strjoin(rtn, ft_skip_quotes(lexer, str, c, ++(*i)));
+					rtn = ft_strjoin(rtn, ft_scan_quotes(str, c, i));
 				else if (str[*i] == '\'')
-					rtn = ft_strjoin(rtn, ft_skip_quotes(lexer, str, '\'', ++(*i)));
+					rtn = ft_strjoin(rtn, ft_scan_quotes(str, '\'', i));
 			}
-			else if (str[*i] && str[*i] == ' ' || str[*i] == '\t')
+			else if (str[*i] == ' ' || str[*i] == '\t')
+				break ;
+			if (str[*i] && (/*str[*i] == ' ' || str[*i] == '\t' || */str[*i] != '\'' || str[*i] != '"'))
 				break ;
 			if (str[*i] == '\0')
 				return (rtn);
 		}
 		if (str[*i] == '\0')
 		{
+			puts("hna");
+			printf("rtn == %s\n", rtn);
 			free(rtn);
 			return (NULL);
 		}
@@ -175,7 +245,7 @@ char	*ft_scan_quotes(t_lexer **lexer, char *str, char c, int *i)
 		tmp = ft_char_to_str(str[*i]);
 		rtn = ft_strjoin(rtn, tmp);
 		free(tmp);
-		*i++;
+		(*i)++;
 	}
 	return (rtn);
 }

@@ -27,8 +27,8 @@ void	ft_handle()
 		}
 		add_history(rtn);
 		lexer = NULL;
-		ft_lexer(rtn, &lexer);
-		// ft_parser(lexer, rtn);
+		// ft_lexer(rtn, &lexer);
+		ft_parser(lexer, rtn);
 		free(rtn);
 	}
 }
