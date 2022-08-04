@@ -1,4 +1,4 @@
-SRCS = main.c parse.c path.c utils.c
+SRCS = main.c parse.c path.c utils.c cd.c echo.c env.c export.c unset.c pwd.c
 SRCDIR = mand
 OBJS_DIR = objs
 CC = clang

@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 14:30:18 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/27 17:59:03 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/03 17:03:41 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_env	*ft_lst_new1(char *key, char *value)
 	lst = (t_env *)malloc(sizeof(t_env));
 	if (!lst)
 		return (NULL);
-	lst->key = key;
-	lst->value = value;
+	lst->key = ft_strdup(key);
+	lst->value = ft_strdup(value);
 	lst->next = NULL;
 	return(lst);
 }
@@ -39,5 +39,25 @@ void	ft_lstadd_back_prime(t_env **lst, t_env *node)
 		while (head->next)
 			head = head->next;
 		head->next = node;
+	}
+}
+
+char	*get_keys(char *str, int c)
+{
+	char	*h;
+	char	a;
+	int		j;
+
+	h = str;
+	j = 0;
+	a = (char) c;
+	while (h[j] && h[j] != a)
+		j++;
+	if (h[j] + 2 == 0)
+		return (str);
+	else
+	{
+		h[j] = 0;
+		return (h);
 	}
 }

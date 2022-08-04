@@ -39,13 +39,15 @@ void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	pwd_env(t_env *env);
-void	export_env(t_env *env, t_args *arg, char **str);
+void	export_env(t_env **env, t_args *arg, char **str);
 void	echo(t_env *env, char **cmd, t_args *arg);
 void	cd_home(t_env *env, t_args *arg);
 void	cd(t_env *env, char *str, t_args *arg);
 void	ft_lstadd_back_prime(t_env **lst, t_env *node);
 t_env   *ft_lst_new1(char *key, char *value);
-t_env   *unset_env(t_env *env, char **str);
+t_env	*create_env(char **envp);
+t_env	*env_i(t_env *env);
+void	unset_env(t_env **env, char **str);
 void	env_env(t_env *env);
 
 #endif
