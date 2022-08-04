@@ -1,8 +1,8 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
- #include <sys/types.h>
- #include <signal.h>
+# include <sys/types.h>
+# include <signal.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
@@ -14,6 +14,7 @@
 # include <readline/readline.h>
 # include "libft/libft.h"
 
+int	g_exit_code;
 typedef struct s_args
 {
     char    *arg;

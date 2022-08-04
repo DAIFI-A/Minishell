@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:55:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/03 16:59:25 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/04 17:20:07 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	cd_home(t_env *env, t_args *arg)
 			{
 				if (chdir(env->value))
 				{
+					g_exit_code = 1;
 					ft_putendl_fd("Home not set", 1);
 					return ;
 				}
@@ -81,7 +82,7 @@ void	cd(t_env *env, char *str, t_args *arg)
 		if (chdir(str))
 		{
 			ft_putendl_fd("No such file or directory", 2);
-			//exit_status = 1;
+			g_exit_code = 1;
 			return ;
 		}
 		while (lst)

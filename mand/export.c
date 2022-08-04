@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:00:32 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/03 17:01:14 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/04 17:40:01 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	export_env(t_env **env, t_args *arg, char **str)
 {
-	// export a=b then a=k => env = a=k
-	//export a=b then export a+=abe => output : a=babe
 	int		i;
 	t_env	*lst;
 	char	*value;
@@ -24,7 +22,6 @@ void	export_env(t_env **env, t_args *arg, char **str)
 
 	i = 1;
 	j = 0;
-	lst = (*env);
 	if (str[i] == NULL)
 	{
 		while ((*env))
@@ -36,21 +33,23 @@ void	export_env(t_env **env, t_args *arg, char **str)
 	} 
 	while (str[i])
 	{
+		lst = (*env);
 		while ((*env) && str[i])
 		{
 			if ((*env)->key)
 			{
 				key = ft_strdup(str[i]);
-				key = ft_strrchr(key, '=');
-				puts(key);
-				if (!key || !ft_isalpha(key[j]) && ft_strncmp(key, "_", 1) != 0)
+				key = get_keys(key, '=');
+				if (!key || !ft_isalpha(key[0]) && ft_strncmp(key, "_", 1) != 0)
 				{
+					g_exit_code = 1;
 					printf("export: `%s': not a valid identifier\n", key);
 					break ;
 				}
 				if (!ft_strncmp(key, (*env)->key, ft_strlen((*env)->key)))
 				{
-					(*env)->value = ft_strdup(ft_strchr(str[i], '=') + 1); 
+					(*env)->value = ft_strdup(ft_strchr(str[i], '=') + 1);
+					(*env) = lst;
 					break ;
 				}
 			}

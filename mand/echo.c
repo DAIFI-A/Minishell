@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:06:02 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/04 01:51:15 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/04 16:33:39 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ void	echo(t_env *env, char **cmd, t_args *arg)
 	int		i;
 	char	*output;
 
+	i = 0;
+	while (cmd[i])
+		i++;
+	if (i == 1)
+	{
+		printf("\n");
+		return ;
+	}
 	i = 1;
 	while (cmd[i])
 	{

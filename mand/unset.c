@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:01:26 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/03 17:02:51 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/04 17:23:44 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,25 @@
 void	unset_env(t_env **env, char **str)
 {
 	int		i;
+	int		j;
 	t_env	*tmp;
 	t_env	*lst;
 	t_env	*env_back;
 
 	i = 1;
+	j = 0;
 	tmp = NULL;
 	while (str[i])
 	{
+		if (str[1][0] == '$' || !ft_isalpha(str[i][j]) && ft_strncmp(str[i], "_", 1) != 0)
+		{
+			if (str[1][0] == '$')
+				g_exit_code = 2;
+			else
+				g_exit_code = 1;
+			ft_putendl_fd("Usage: unset [name ...]", 2);
+			break ;
+		}
 		env_back = (*env);
 		while((*env))
 		{
@@ -48,5 +59,6 @@ void	unset_env(t_env **env, char **str)
 		*env = tmp;
 		tmp = NULL;
 		i++;
+		j++;
 	}
 }

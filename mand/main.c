@@ -51,7 +51,7 @@ void	builting(t_env **env, t_args *arg)
 
 }
 
-int	one_cmd(t_env **env, t_args *arg, char *envp[])
+int	one_cmd(t_env **env, t_args *arg)
 {
 	int		i;
 
@@ -64,6 +64,7 @@ int	one_cmd(t_env **env, t_args *arg, char *envp[])
 		if (check_type(arg->cmd[i]))
 		{
 			builting(env, arg);
+
 			return (1);
 		}
 		else
@@ -77,7 +78,7 @@ int	one_cmd(t_env **env, t_args *arg, char *envp[])
 	return (0);
 }
 
-void	check_cmd(t_env **env, t_args *arg, char	*envp[])
+void	check_cmd(t_env **env, t_args *arg)
 {
 	t_env	*lst;
 	int		i;
@@ -85,7 +86,7 @@ void	check_cmd(t_env **env, t_args *arg, char	*envp[])
 	i = 0;
 	
 //	check_path(env, arg);
-	if (one_cmd(env, arg, envp))
+	if (one_cmd(env, arg))
 		return ;
 }
 
@@ -94,6 +95,7 @@ int main(int argc, char const *argv[], char *envp[])
 	t_args	*arg;
 	t_env	*env;
 	int		i;
+	int		pid;
 	
 	i = 0;
 	arg = (t_args *)malloc(sizeof(t_args));
@@ -101,11 +103,12 @@ int main(int argc, char const *argv[], char *envp[])
 		env = env_i(env);
 	if (envp[i])
 		env = create_env(envp);
+	g_exit_code = 0;
 	while(1)
 	{
 		arg->str = readline("Minishell> ");
 		arg->cmd = ft_split(arg->str, '|');
-		check_cmd(&env, arg, envp);
+		check_cmd(&env, arg);
 	}
 	return 0;
 }

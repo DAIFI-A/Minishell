@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:04:11 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/04 01:42:55 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/04 17:32:21 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ t_env	*env_i(t_env *env)
 	value = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	lst = ft_lst_new1(key, value);
 	ft_lstadd_back_prime(&env, lst);
-	// key = ft_strdup("OLDPWD");
-	// value = ft_strdup("\n");
-	// lst = ft_lst_new1(key, value);
-	// ft_lstadd_back_prime(&env, lst);
+	key = ft_strdup("OLDPWD");
+	value = ft_strdup(" ");
+	lst = ft_lst_new1(key, value);
+	ft_lstadd_back_prime(&env, lst);
 	return (env);
 }
 
