@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:04:11 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/04 17:32:21 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/05 15:11:24 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,19 @@ t_env	*env_i(t_env *env)
 	return (env);
 }
 
-void	env_env(t_env *env)
+void	env_env(char **str, t_env *env)
 {
 	t_env	*tmp;
+	int		i;
 
 	tmp = env;
+	i = 0;
+	while (str[i])
+	{
+		i++;
+		if (i > 1)
+			return ;
+	}
 	while (tmp)
 	{
 		if (tmp->key && tmp->value)

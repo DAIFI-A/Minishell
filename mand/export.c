@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:00:32 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/04 17:40:01 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/05 14:08:21 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	export_env(t_env **env, t_args *arg, char **str)
 			{
 				key = ft_strdup(str[i]);
 				key = get_keys(key, '=');
-				if (!key || !ft_isalpha(key[0]) && ft_strncmp(key, "_", 1) != 0)
+				if (!key || (!ft_isalpha(key[0]) && ft_strncmp(key, "_", 1) != 0))
 				{
 					g_exit_code = 1;
 					printf("export: `%s': not a valid identifier\n", key);

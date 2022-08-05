@@ -30,9 +30,9 @@ void	builting(t_env **env, t_args *arg)
 
 	cmd = ft_split(*(arg->cmd), ' ');
 	if (!ft_strncmp(cmd[0], "pwd", 4))
-		pwd_env(*env);
+		pwd_env(cmd, *env);
 	else if (!ft_strncmp(cmd[0], "cd", 3))
-		cd(*env, cmd[1], arg);
+		cd(*env, cmd, arg);
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		unset_env(env, cmd);
 	else if (!ft_strncmp(cmd[0], "echo", 5))
@@ -40,15 +40,14 @@ void	builting(t_env **env, t_args *arg)
 	else if (!ft_strncmp(cmd[0], "export", 7))
 		export_env(env, arg, cmd);
 	else if (!ft_strncmp(cmd[0], "env", 4))
-		env_env(*env);
-	// else if (!ft_strncmp(cmd[0], "exit", 5))
-	// {
-	// 	if (cmd[1] != NULL)
-	// 		exit0(env, arg);
-	// 	else
-	// 		exit1(env, arg);
-	//}
-
+		env_env(cmd, *env);
+	else if (!ft_strncmp(cmd[0], "exit", 5))
+	{
+		if (!cmd[1])
+			exit(g_exit_code);
+		else if (cmd[1])
+			exit(ft_atoi(cmd[1]));
+	}
 }
 
 int	one_cmd(t_env **env, t_args *arg)

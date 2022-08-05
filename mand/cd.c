@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:55:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/04 17:20:07 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/05 15:07:39 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,50 +67,57 @@ void	cd_home(t_env *env, t_args *arg)
 	}
 }
 
-void	cd(t_env *env, char *str, t_args *arg)
+void	cd(t_env *env, char **str, t_args *arg)
 {
 	char	*old_pwd;
 	char	cwd[1024];
 	t_env	*lst;
+	int		i;
 
 	old_pwd = NULL;
 	lst = env;
-	if (str == NULL)
+	i = 1;
+	if (str[i] == NULL || !ft_strncmp(str[i], "~", ft_strlen(str[i])))
 		cd_home(env, arg);
+	//expansion of ~!!!
 	else 
 	{
-		if (chdir(str))
+		while (str[i])
 		{
-			ft_putendl_fd("No such file or directory", 2);
-			g_exit_code = 1;
-			return ;
-		}
-		while (lst)
-		{
-			if (lst->key)
+			if (chdir(str[i]))
 			{
-				if (!ft_strncmp(lst->key, "PWD", 4))
-				{
-					if (lst->value)
-						old_pwd = lst->value;
-					lst->value = ft_strdup(getcwd(cwd, sizeof(cwd)));
-					break ;
-				}
+				ft_putendl_fd("No such file or directory", 2);
+				g_exit_code = 1;
+				return ;
 			}
-			lst = lst->next;
-		}
-		lst = env;
-		while (lst)
-		{
-			if (lst->key)
+			while (lst)
 			{
-				if (!ft_strncmp(lst->key, "OLDPWD", 7))
+				if (lst->key)
 				{
-					lst->value = old_pwd;
-					break ;
+					if (!ft_strncmp(lst->key, "PWD", 4))
+					{
+						if (lst->value)
+							old_pwd = lst->value;
+						lst->value = ft_strdup(getcwd(cwd, sizeof(cwd)));
+						break ;
+					}
 				}
+				lst = lst->next;
 			}
-			lst = lst->next;
+			lst = env;
+			while (lst)
+			{
+				if (lst->key)
+				{
+					if (!ft_strncmp(lst->key, "OLDPWD", 7))
+					{
+						lst->value = old_pwd;
+						break ;
+					}
+				}
+				lst = lst->next;
+			}
+			i++;
 		}
 	}
 }
