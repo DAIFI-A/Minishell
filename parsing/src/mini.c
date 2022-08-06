@@ -33,14 +33,18 @@ void	ft_handle()
 	}
 }
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
+	t_env	*env;
+
+	env = NULL;
+	ft_header();
 	(void)ac;
 	(void)av;
 	signal(2, ft_sighandler);
 	rl_catch_signals = 0;
 	signal(3, SIG_IGN);
-	ft_header();
+	env = ft_environment(envp, env);
 	ft_handle();
 	return (0);
 }

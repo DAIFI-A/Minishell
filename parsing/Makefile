@@ -4,7 +4,7 @@ CC= gcc
 
 CFLAGS= -Wall -Wextra -Werror
 
-CFILES = mini.c ft_header.c ft_lexer.c ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstlast.c ft_lstnew.c ft_lstsize.c ft_parser.c
+CFILES = mini.c ft_header.c ft_lexer.c ft_lst_lexer.c ft_lst_env.c ft_parser.c ft_environment.c
 
 OFILES = $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 

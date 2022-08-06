@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/02 10:51:23 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/06 15:16:57 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include <signal.h>
+ #include <unistd.h>
 
 typedef struct lexer{
 	char			*content;
@@ -26,10 +27,24 @@ typedef struct lexer{
 	struct lexer	*next;
 }t_lexer;
 
+typedef struct environment
+{
+	char				*name;
+	char				*value;
+	struct environment	*next;
+}t_env;
+
 void	ft_handle(void);
 //utils
 void	ft_header(void);
 void	ft_lexer(char *str, t_lexer **lexer);
+//envp
+t_env	*ft_environment(char **envp, t_env *env);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
+void	ft_lstadd_front_env(t_env **lst, t_env *new);
+int		ft_lstsize_env(t_env *lst);
+t_env	*ft_lstnew_env(char *name, char *value);
+t_env	*ft_lstlast_env(t_env *lst);
 //lexer
 int		ft_check_case(char c);
 int		ft_skip_withespace(char *str, int i);

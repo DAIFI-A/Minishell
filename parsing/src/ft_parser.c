@@ -6,25 +6,12 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/02 13:40:38 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/06 13:51:18 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	ft_check_case_2(char c)
-{
-	if (c == '\0')
-		return (-1);
-	else if (c == '<' || c == '>' || c == '|')
-		return (1);
-	else if (c == ' ' || c == '\t')
-		return (2);
-	else if (c == '"' || c == '\'')
-		return (3);
-	else
-		return (0);
-}
 
 void	ft_parser(t_lexer *lexer, char *str)
 {
@@ -35,7 +22,6 @@ void	ft_parser(t_lexer *lexer, char *str)
 
 	i = 0;
 	i = ft_skip_withespace(str, i);
-	printf("start\n");
 	while (str[i])
 	{
 		if (ft_check_case_2(str[i]) == 0 || ft_check_case_2(str[i]) == 3)
@@ -97,60 +83,6 @@ void	ft_parser(t_lexer *lexer, char *str)
 		if (str[i] == '\0')
 			break ;
 	}
-	printf("end\n");
-}
-
-int	ft_scan(char *rtn)
-{
-	if (ft_locate_char(rtn, '\'') % 2 != 0 || ft_locate_char(rtn, '"') % 2 != 0)
-	{
-		printf("Error\n");
-		return (exit(1), 1);
-	}
-	else
-		return (0);
-}
-
-int	ft_locate_char(char *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while(str[i])
-	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-int	ft_check_stock(char *str)
-{
-	int	i;
-	int	count1;
-	int	count2;
-	int count3;
-
-	i = 0;
-	count1 = 0;
-	count2 = 0;
-	count3 = 1;
-	while (str[i])
-	{
-		if (str[i] == '>')
-			count1++;
-		if (str[i] == '<')
-			count2++;
-		if (str[i] == '|')
-			count3++;
-		i++;
-	}
-	if (count1 > 2 || count2 > 2 || count3 > 2)
-		return (1);
-	return (0);
 }
 
 char	*ft_scan_pipe(char *str, char c, int *i)
