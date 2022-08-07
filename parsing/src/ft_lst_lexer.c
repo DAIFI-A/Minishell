@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 12:40:11 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/06 14:35:04 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/07 15:37:09 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,25 @@ void	ft_lstadd_back(t_lexer **lst, t_lexer *new)
 {
 	t_lexer *tmp;
 
-	if (lst == NULL || *lst == NULL)
+	if (*lst == NULL)
 	{
 		*lst = new;
+		// printf("content cas null == %s\n", (*lst)->content);
 		new->next = NULL;
 		return ;
 	}
 	tmp = *lst;
+	// printf("content cas lst == %s\n", (*lst)->content);
+	// printf("content cas tmp == %s\n", (tmp)->content);
 	while ((*lst)->next != NULL)
+	{
+		// printf("content cas while == %s\n", (*lst)->content);
 		*lst = (*lst)->next;
+	}
 	(*lst)->next = new;
 	new->next = NULL;
 	*lst = tmp;
-}
-
-void	ft_lstadd_front(t_lexer **lst, t_lexer *new)
-{
-	new->next = *lst;
-	*lst = new;
-}
-
-int	ft_lstsize(t_lexer *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst->next != NULL)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
+	// printf("content cas rewind == %s\n", (*lst)->content);
 }
 
 t_lexer	*ft_lstnew(char *content)
@@ -56,15 +44,8 @@ t_lexer	*ft_lstnew(char *content)
 	node = (t_lexer *)malloc(sizeof(t_lexer));
 	if (node == NULL)
 		return (NULL);
-	node->content = content;
-	printf("cmd == %s\n", node->content);    
+	node->content = ft_strdup(content);
+	// printf("cmd == %s\n", node->content);
 	node->next = NULL;
 	return (node);
-}
-
-t_lexer	*ft_lstlast(t_lexer *lst)
-{
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
 }
