@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:48:10 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/07 16:01:44 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/08 08:17:37 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_memcpy(ptr, s1, y);
 	ft_strlcat(ptr, s2, t);
-	free(s1);
+	free((void *)s1);
 	return (ptr);
 }

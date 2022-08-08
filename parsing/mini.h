@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/07 16:00:17 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/08 08:56:15 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int		ft_check_case(char c);
 char	*ft_scan_quotes(char *str, char c, int *i, int *j);
 char	*ft_scan_redirection(char *rtn, int *i, char c);
 char	*ft_scan_pipe(char *str, char c, int *i);
+int		ft_utils_pipe(char *str);
 //node
 void	ft_lstadd_back(t_lexer **lst, t_lexer *new);
 t_lexer	*ft_lstnew(char *content);
+t_lexer	*ft_lstlast(t_lexer *lst);
 #endif

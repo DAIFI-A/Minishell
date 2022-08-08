@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/07 16:50:30 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/08 09:08:01 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,7 @@ void	ft_parser(t_lexer **lexer, char *str)
 		{
 			stock = ft_scan_pipe(str, str[i], &i);
 			if (stock == NULL)
-			{
-				printf("error_ft_scan_quotes\n");
 				return ;
-			}
 			node = ft_lstnew(stock);
 			ft_lstadd_back(lexer, node);
 			free(stock);
@@ -110,25 +107,27 @@ char	*ft_scan_pipe(char *str, char c, int *i)
 	char	*rtn;
 	char	*tmp;
 
-	if ((*i) == 0)
-		return (printf("|error_pipe\n"), NULL);
-	rtn = ft_strdup("");
-	if (str[(*i) + 1] == c || str[(*i) + 1] == '\0')
+	if (ft_utils_pipe(str) == 0)
 	{
-		printf("error_pipe\n");
-		return (free(rtn), NULL);
+		rtn = ft_strdup("");
+		if (str[(*i) + 1] == c)
+		{
+			ft_putendl_fd("Error: syntax `|'", 2);
+			return (free(rtn), NULL);
+		}
+		tmp = ft_char_to_str(str[*i]);
+		rtn = ft_strjoin(rtn, tmp);
+		free(tmp);
+		(*i)++;
+		if (str[*i] == ' ' || str[*i] == '\t')
+		{
+			(*i) = ft_skip_withespace(str, *i);
+			if (str[*i] == '|')
+				return(ft_putendl_fd("Error: syntax `|'", 2), free(rtn), NULL);
+		}
+		return (rtn);
 	}
-	tmp = ft_char_to_str(str[*i]);
-	rtn = ft_strjoin(rtn, tmp);
-	free(tmp);
-	(*i)++;
-	if (str[*i] == ' ' || str[*i] == '\t')
-	{
-		(*i) = ft_skip_withespace(str, *i);
-		if (str[*i] == '|')
-			return(printf("error_pipe\n"), free(rtn), NULL);
-	}
-	return (rtn);
+	return (NULL);
 }
 
 char	*ft_scan_redirection(char *str, int *i, char c)

@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:35:27 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/07 16:56:10 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/08 09:05:19 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,38 @@
 
 void	ft_lexer(t_lexer ** lexer)
 {
+	t_lexer	*ft_lstlast(t_lexer *lst);
 	while (*(lexer))
-	{
-		if ()p\
-	}
+		puts("med");
 }
 int	ft_skip_withespace(char *str, int i)
 {
 	while(str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	return (i);
+}
+
+int	ft_utils_pipe(char *str)
+{
+	int	i;
+
+	i = 0;
+	i = ft_skip_withespace(str, i);
+	if (str[i] == '|')
+	{
+		ft_putendl_fd("Error: syntax `|'", 2);
+		return (1);
+	}
+	i = ft_strlen(str);
+	i--;
+	while (str[i] == ' ' || str[i] == '\t')
+		i--;
+	if (str[i] == '|')
+	{
+		ft_putendl_fd("Error: > ...", 2);
+		return (1);
+	}
+	return (0);
 }
 
 char	*ft_char_to_str(char c)
