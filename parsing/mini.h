@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/08 08:56:15 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/08 10:35:22 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ typedef struct environment
 
 //utils
 void	ft_header(void);
-void	ft_handle(void);
+void	ft_handle(t_env *env);
+//expand
+void	ft_expand(t_lexer **lexer, t_env *env);
+char	*ft_parse_expand(char *str, t_env *env);
 //envp
 t_env	*ft_environment(char **envp, t_env *env);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);

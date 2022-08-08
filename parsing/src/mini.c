@@ -38,7 +38,7 @@ void	ft_free_lst_env(t_env **head)
 	}
 }
 
-void	ft_handle()
+void	ft_handle(t_env *env)
 {
 	char	*rtn;
 	t_lexer *lexer;
@@ -55,6 +55,12 @@ void	ft_handle()
 		}
 		add_history(rtn);
 		ft_parser(&lexer, rtn);
+		ft_expand(&lexer, env);
+		while (lexer)
+		{
+			printf("node == %s\n", lexer->content);
+			lexer = lexer->next;
+		}
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
 		free(rtn);
@@ -73,7 +79,7 @@ int main(int ac, char **av, char **envp)
 	rl_catch_signals = 0;
 	signal(3, SIG_IGN);
 	env = ft_environment(envp, env);
-	ft_handle();
+	ft_handle(env);
 	ft_free_lst_env(&env);
 	return (0);
 }

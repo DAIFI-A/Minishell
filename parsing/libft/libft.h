@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 18:34:02 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/08 08:48:42 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/08 11:02:23 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ size_t	ft_strlen(const char *s);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 long	ft_atoi(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
 //malloc
 char	*ft_strdup(const char *s1);
 //part 2
