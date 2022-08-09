@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 09:31:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/09 15:48:06 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:07:12 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,6 @@ char	*ft_tilde(char *str, t_env *env)
 	free(str);
 	return (rtn);
 }
-
-int	ft_tilde_yes()
-{}
 
 int	ft_put_dollar(char c)
 {
