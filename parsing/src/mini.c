@@ -59,6 +59,7 @@ void	ft_handle(t_env *env)
 		while (lexer)
 		{
 			printf("node == %s\n", lexer->content);
+			printf("ch == %c\n", lexer->ch);
 			lexer = lexer->next;
 		}
 		if (lexer != NULL)

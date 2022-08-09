@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:35:27 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/08 09:05:19 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 09:52:54 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,18 @@ int	ft_check_case(char c)
 		return (3);
 	else
 		return (0);
+}
+
+int	ft_find_char(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (0);
+		i++;
+	}
+	return (1);
 }

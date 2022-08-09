@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/08 10:35:22 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 12:23:48 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ void	ft_handle(t_env *env);
 //expand
 void	ft_expand(t_lexer **lexer, t_env *env);
 char	*ft_parse_expand(char *str, t_env *env);
+int		ft_put_dollar(char c);
+char	*ft_tilde(char *str, t_env *env);
 //envp
 t_env	*ft_environment(char **envp, t_env *env);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(char *name, char *value);
 void	ft_free_2d(char **ptr);
 //lexer
+int		ft_find_char(char *str, char c);
 int		ft_skip_withespace(char *str, int i);
 char	*ft_char_to_str(char c);
 //parser
