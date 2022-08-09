@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
+/*   Updated: 2022/08/09 16:36:15 by med-doba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../mini.h"
 
 void	ft_sighandler(int sig)
@@ -41,7 +53,7 @@ void	ft_free_lst_env(t_env **head)
 void	ft_handle(t_env *env)
 {
 	char	*rtn;
-	t_lexer *lexer;
+	t_lexer	*lexer;
 
 	while (1)
 	{
@@ -59,7 +71,6 @@ void	ft_handle(t_env *env)
 		while (lexer)
 		{
 			printf("node == %s\n", lexer->content);
-			// printf("ch == %c\n", lexer->ch);
 			lexer = lexer->next;
 		}
 		if (lexer != NULL)
@@ -68,7 +79,7 @@ void	ft_handle(t_env *env)
 	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
 

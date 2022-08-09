@@ -14,27 +14,22 @@
 
 void	ft_lstadd_back(t_lexer **lst, t_lexer *new)
 {
-	t_lexer *tmp;
+	t_lexer	*tmp;
 
 	if (*lst == NULL)
 	{
 		*lst = new;
-		// printf("content cas null == %s\n", (*lst)->content);
 		new->next = NULL;
 		return ;
 	}
 	tmp = *lst;
-	// printf("content cas lst == %s\n", (*lst)->content);
-	// printf("content cas tmp == %s\n", (tmp)->content);
 	while ((*lst)->next != NULL)
 	{
-		// printf("content cas while == %s\n", (*lst)->content);
 		*lst = (*lst)->next;
 	}
 	(*lst)->next = new;
 	new->next = NULL;
 	*lst = tmp;
-	// printf("content cas rewind == %s\n", (*lst)->content);
 }
 
 t_lexer	*ft_lstnew(char *content)
@@ -45,7 +40,6 @@ t_lexer	*ft_lstnew(char *content)
 	if (node == NULL)
 		return (NULL);
 	node->content = ft_strdup(content);
-	// printf("cmd == %s\n", node->content);
 	node->next = NULL;
 	return (node);
 }

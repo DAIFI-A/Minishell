@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 10:57:18 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/07 16:00:26 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:13:32 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_2d(char **ptr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ptr[i])
@@ -38,7 +38,8 @@ t_env	*ft_environment(char **envp, t_env *env)
 		ft_lstadd_back_env(&env, node);
 		node = ft_lstnew_env("_", "/usr/bin/env");
 		ft_lstadd_back_env(&env, node);
-		node = ft_lstnew_env("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		node = ft_lstnew_env("PATH",
+				"/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 		ft_lstadd_back_env(&env, node);
 		return (env);
 	}

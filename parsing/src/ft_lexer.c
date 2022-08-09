@@ -12,15 +12,17 @@
 
 #include "../mini.h"
 
-void	ft_lexer(t_lexer ** lexer)
+void	ft_lexer(t_lexer **lexer)
 {
 	t_lexer	*ft_lstlast(t_lexer *lst);
+
 	while (*(lexer))
 		puts("med");
 }
+
 int	ft_skip_withespace(char *str, int i)
 {
-	while(str[i] && (str[i] == ' ' || str[i] == '\t'))
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	return (i);
 }

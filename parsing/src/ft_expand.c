@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 09:31:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/09 16:07:12 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:39:22 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_expand(t_lexer **lexer, t_env *env)
 {
-	char	*tmp;
+	char		*tmp;
 	t_lexer		*head;
 
 	head = (*lexer);
@@ -40,8 +40,7 @@ void	ft_expand(t_lexer **lexer, t_env *env)
 char	*ft_parse_expand(char *str, t_env *env)
 {
 	char	*rtn;
-	char	*tmp1;
-	char	*tmp2;
+	char	*tmp;
 	char	*stock;
 	int		i;
 	t_env	*head;
@@ -58,9 +57,9 @@ char	*ft_parse_expand(char *str, t_env *env)
 			{
 				while ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9') || (str[i] == '_'))
 				{
-					tmp2 = ft_char_to_str(str[i]);
-					stock = ft_strjoin(stock, tmp2);
-					free(tmp2);
+					tmp = ft_char_to_str(str[i]);
+					stock = ft_strjoin(stock, tmp);
+					free(tmp);
 					i++;
 				}
 				if (stock)
@@ -73,7 +72,7 @@ char	*ft_parse_expand(char *str, t_env *env)
 							free(stock);
 							stock = ft_strdup(env->value);
 							rtn = ft_strjoin(rtn, stock);
-							break;
+							break ;
 						}
 						env = env->next;
 					}
@@ -84,22 +83,21 @@ char	*ft_parse_expand(char *str, t_env *env)
 			}
 			else if (ft_put_dollar(str[i]) == 0)
 			{
-				tmp2 = ft_char_to_str('$');
-				rtn = ft_strjoin(rtn, tmp2);
-				free(tmp2);
+				tmp = ft_char_to_str('$');
+				rtn = ft_strjoin(rtn, tmp);
+				free(tmp);
 			}
 		}
 		if (str[i] == '\0')
 			break ;
 		if (str[i] != '$')
 		{
-			tmp1 = ft_char_to_str(str[i]);
-			rtn = ft_strjoin(rtn, tmp1);
-			free(tmp1);
+			tmp = ft_char_to_str(str[i]);
+			rtn = ft_strjoin(rtn, tmp);
+			free(tmp);
 			i++;
 		}
 	}
-	// free(stock);
 	free(str);
 	return (rtn);
 }
@@ -121,7 +119,7 @@ char	*ft_tilde(char *str, t_env *env)
 			if (ft_strcmp(env->name, "HOME") == 0)
 			{
 				rtn = ft_strjoin(rtn, env->value);
-				break;
+				break ;
 			}
 			env = env->next;
 		}
@@ -144,11 +142,11 @@ char	*ft_tilde(char *str, t_env *env)
 
 int	ft_put_dollar(char c)
 {
-	if (!(c >= 'A' && c <= 'Z') &&
-		!(c >= 'a' && c <= 'z') &&
-		!(c >= '0' && c <= '9') &&
-		!(c == '_' && c == '$'))
+	if (!(c >= 'A' && c <= 'Z')
+		&& !(c >= 'a' && c <= 'z')
+		&& !(c >= '0' && c <= '9')
+		&& !(c == '_' && c == '$'))
 		return (0);
 	else
-	return (1);
+		return (1);
 }

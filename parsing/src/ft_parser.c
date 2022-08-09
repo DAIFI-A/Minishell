@@ -6,12 +6,11 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/09 15:28:33 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:44:22 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
-
 
 void	ft_parser(t_lexer **lexer, char *str)
 {
@@ -33,11 +32,11 @@ void	ft_parser(t_lexer **lexer, char *str)
 			if (str[i] == '"' || str[i] == '\'')
 			{
 				ch = str[i];
-				if(stock == NULL)
+				if (stock == NULL)
 					stock = ft_scan_quotes(str, str[i], &i, &j);
 				else
 				{
-					char *tmp = ft_scan_quotes(str, str[i], &i, &j);
+					tmp = ft_scan_quotes(str, str[i], &i, &j);
 					stock = ft_strjoin(stock, tmp);
 					free(tmp);
 				}
@@ -123,7 +122,7 @@ char	*ft_scan_pipe(char *str, char c, int *i)
 		{
 			(*i) = ft_skip_withespace(str, *i);
 			if (str[*i] == '|')
-				return(ft_putendl_fd("Error: syntax `|'", 2), free(rtn), NULL);
+				return (ft_putendl_fd("Error: syntax `|'", 2), free(rtn), NULL);
 		}
 		return (rtn);
 	}
@@ -142,7 +141,6 @@ char	*ft_scan_redirection(char *str, int *i, char c)
 	{
 		if (count == 2 || str[*i] == '\0' || str[*i + 1] == '\0')
 		{
-
 			free(rtn);
 			printf("error_redirection\n");
 			return (NULL);
@@ -211,7 +209,7 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 		else if (str[*i] == '\0' && (*j % 2) == 0)
 			return (rtn);
 		if ((str[*i] == ' ' || str[*i] == '\t') && (*j % 2) == 0)
-			break;
+			break ;
 		tmp = ft_char_to_str(str[*i]);
 		rtn = ft_strjoin(rtn, tmp);
 		free(tmp);

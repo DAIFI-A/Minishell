@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/09 12:23:48 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:10:25 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include <signal.h>
- #include <unistd.h>
+# include <unistd.h>
 
 typedef struct lexer{
 	char			*content;
