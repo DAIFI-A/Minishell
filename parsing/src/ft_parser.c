@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/08 09:08:01 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/09 15:28:33 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,11 @@ char	*ft_scan_redirection(char *str, int *i, char c)
 		if (str[*i] == ' ' || str[*i] == '\t')
 		{
 			(*i) = ft_skip_withespace(str, *i);
-			if (str[*i] == c)
+			if (str[*i] == '<' || str[*i] == '>')
 			{
 				free(rtn);
 				printf("error_redirection_space\n");
+				ft_putendl_fd("Error: parse error (< || >)", 2);
 				return (NULL);
 			}
 		}
@@ -171,9 +172,7 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 	char	*rtn;
 	char	*tmp;
 	char	*tmp1;
-	// int		j;
 
-	// j = 0;
 	rtn = ft_strdup("");
 	(*i)++;
 	(*j)++;
@@ -181,13 +180,10 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 	{
 		if (str[*i] == c)
 		{
-
 			(*i)++;
 			(*j)++;
-			// printf("rtn == %s j == %d\n", rtn, *j);
-			if (str[*i] && (str[*i] == '"' || str[*i] == '\'' ) && (str[*i] != ' ' && str[*i] != '\t'))
+			if (str[*i] && (str[*i] == '"' || str[*i] == '\'' ))
 			{
-
 				if (str[*i] == '"')
 				{
 					tmp1 = ft_scan_quotes(str, '"', i, j);
@@ -196,32 +192,28 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 				}
 				else if (str[*i] == '\'')
 				{
-
 					tmp1 = ft_scan_quotes(str, '\'', i, j);
 					rtn = ft_strjoin(rtn, tmp1);
 					free(tmp1);
 				}
 			}
-			else if (str[*i] == ' ' || str[*i] == '\t')
+			if (str[*i] == ' ' || str[*i] == '\t')
 				break ;
 			if (str[*i] && (str[*i] == '|' || str[*i] == '>' || str[*i] == '<'))
 				break ;
-			// if (str[*i] == '\0' && (*j % 2) == 0)
-			// 	return (rtn);
 		}
 		if (str[*i] == '\0' && (*j % 2) != 0)
 		{
-			printf("j == %d\n", *j);
-			puts("hna");
-			printf("rtn == %s\n", rtn);
+			ft_putendl_fd("Error: quote >...", 2);
 			free(rtn);
 			return (NULL);
 		}
 		else if (str[*i] == '\0' && (*j % 2) == 0)
 			return (rtn);
+		if ((str[*i] == ' ' || str[*i] == '\t') && (*j % 2) == 0)
+			break;
 		tmp = ft_char_to_str(str[*i]);
 		rtn = ft_strjoin(rtn, tmp);
-		// printf("rtn == %s\n", rtn);
 		free(tmp);
 		(*i)++;
 	}
