@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:08:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 18:56:35 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:15:45 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int	ft_redirection(char **stock, char *str, int *i, t_lexer **lexer)
 
 void	ft_else(char *str, char **stock, int *i, int *j)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = ft_scan_quotes(str, str[*i], i, j);
 	*stock = ft_strjoin(*stock, tmp);
 	free(tmp);
 }
 
-void	ft_string(t_lexer **lexer, char **stock, char *str, int *i)
+int	ft_string(t_lexer **lexer, char **stock, char *str, int *i)
 {
 	int		j;
 	char	ch;
@@ -48,20 +48,21 @@ void	ft_string(t_lexer **lexer, char **stock, char *str, int *i)
 	if (str[*i] == '"' || str[*i] == '\'')
 	{
 		ch = str[*i];
-		if (stock == NULL)
-			stock = ft_scan_quotes(str, str[*i], &i, &j);
+		if (*stock == NULL)
+			*stock = ft_scan_quotes(str, str[*i], i, &j);
 		else
-			ft_else(str, &stock, &i, &j);
-		if (stock == NULL)
-			return (NULL);
-		ft_add_node(lexer, &stock, ch);
+			ft_else(str, stock, i, &j);
+		if (*stock == NULL)
+			return (1);
+		ft_add_node(lexer, stock, ch);
 	}
 	if (ft_check_case(str[*i]) == 0)
 	{
-		stock = ft_strdup("");
+		*stock = ft_strdup("");
 		while (ft_check_case(str[*i]) == 0)
-			stock = ft_join(stock, str[(*i)++]);
+			*stock = ft_join(*stock, str[(*i)++]);
 		if (str[*i] != '"' && str[*i] != '\'')
-			ft_add_node(lexer, &stock, ch);
+			ft_add_node(lexer, stock, ch);
 	}
+	return (0);
 }

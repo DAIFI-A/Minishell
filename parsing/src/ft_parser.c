@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 18:56:52 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:17:27 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,17 @@
 void	*ft_parser(t_lexer **lexer, char *str)
 {
 	int		i;
-	int		j;
-	char	ch;
 	char	*stock;
 
 	i = 0;
-	j = 0;
-	i = ft_skip_withespace(str, i);
 	stock = NULL;
 	while (str[i])
 	{
+		i = ft_skip_withespace(str, i);
 		if (ft_check_case(str[i]) == 0 || ft_check_case(str[i]) == 3)
 		{
-			// if (str[i] == '"' || str[i] == '\'')
-			// {
-			// 	ch = str[i];
-			// 	if (stock == NULL)
-			// 		stock = ft_scan_quotes(str, str[i], &i, &j);
-			// 	else
-			// 		ft_else(str, &stock, &i, &j);
-			// 	if (stock == NULL)
-			// 		return (NULL);
-			// 	ft_add_node(lexer, &stock, ch);
-			// }
-			// if (ft_check_case(str[i]) == 0)
-			// {
-			// 	stock = ft_strdup("");
-			// 	while (ft_check_case(str[i]) == 0)
-			// 		stock = ft_join(stock, str[i++]);
-			// 	if (str[i] != '"' && str[i] != '\'')
-			// 		ft_add_node(lexer, &stock, ch);
-			// }
+			if (ft_string(lexer, &stock, str, &i) == 1)
+				break ;
 		}
 		else if (str[i] == '|')
 		{
@@ -59,9 +39,6 @@ void	*ft_parser(t_lexer **lexer, char *str)
 		}
 		else
 			i++;
-		i = ft_skip_withespace(str, i);
-		if (str[i] == '\0')
-			break ;
 	}
 	return (NULL);
 }
@@ -113,11 +90,7 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 				break ;
 		}
 		if (str[*i] == '\0' && (*j % 2) != 0)
-		{
-			ft_putendl_fd("Error: quote >...", 2);
-			free(rtn);
-			return (NULL);
-		}
+			return (free(rtn),ft_putendl_fd("Error: quote >...", 2), NULL);
 		else if (str[*i] == '\0' && (*j % 2) == 0)
 			return (rtn);
 		if ((str[*i] == ' ' || str[*i] == '\t') && (*j % 2) == 0)
