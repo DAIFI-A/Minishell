@@ -6,19 +6,11 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 15:35:27 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/09 09:52:54 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/11 09:51:18 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
-
-void	ft_lexer(t_lexer **lexer)
-{
-	t_lexer	*ft_lstlast(t_lexer *lst);
-
-	while (*(lexer))
-		puts("med");
-}
 
 int	ft_skip_withespace(char *str, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 10:57:18 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/09 16:13:32 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/11 07:55:33 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_free_2d(char **ptr)
 t_env	*ft_environment(char **envp, t_env *env)
 {
 	t_env	*node;
-	char	**ptr;
 	int		i;
 
 	i = 0;
@@ -44,12 +43,17 @@ t_env	*ft_environment(char **envp, t_env *env)
 		return (env);
 	}
 	while (envp[i])
-	{
-		ptr = ft_split(envp[i], '=');
-		node = ft_lstnew_env(ptr[0], ptr[1]);
-		ft_lstadd_back_env(&env, node);
-		i++;
-		ft_free_2d(ptr);
-	}
+		ft_while_env(&env, envp, &node, &i);
 	return (env);
+}
+
+void	ft_while_env(t_env **env, char **envp, t_env **node, int *i)
+{
+	char	**ptr;
+
+	ptr = ft_split(envp[*i], '=');
+	*node = ft_lstnew_env(ptr[0], ptr[1]);
+	ft_lstadd_back_env(env, *node);
+	(*i)++;
+	ft_free_2d(ptr);
 }
