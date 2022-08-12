@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 09:31:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 11:04:05 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:20:50 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_parse_expand(char *str, t_env *env)
 		if (str[i] != '$' && str[i] != '\0')
 			rtn = ft_join(rtn, str[i++]);
 	}
-	return (free(str), rtn);
+	return (free(stock), free(str), rtn);
 }
 
 char	*ft_join_value(t_env *env, char **stock, char *rtn)

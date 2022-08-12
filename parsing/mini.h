@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/12 08:43:46 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:02:48 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct lexer{
 	char			*content;
 	char			ch;
+	int				suivi;
 	struct lexer	*next;
 }t_lexer;
 
@@ -34,6 +35,9 @@ typedef struct environment
 	struct environment	*next;
 }t_env;
 
+//main
+int		ft_buffer(char *buff);
+void	ft_free_lst(t_lexer **head);
 //utils
 void	ft_header(void);
 void	ft_handle(t_env *env);
