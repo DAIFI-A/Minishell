@@ -6,41 +6,39 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:06:38 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 19:17:27 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/12 08:43:22 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-void	*ft_parser(t_lexer **lexer, char *str)
+void	ft_parser(t_lexer **lexer, char *str, char **stock)
 {
 	int		i;
-	char	*stock;
 
 	i = 0;
-	stock = NULL;
+	*stock = NULL;
 	while (str[i])
 	{
 		i = ft_skip_withespace(str, i);
 		if (ft_check_case(str[i]) == 0 || ft_check_case(str[i]) == 3)
 		{
-			if (ft_string(lexer, &stock, str, &i) == 1)
+			if (ft_string(lexer, stock, str, &i) == 1)
 				break ;
 		}
 		else if (str[i] == '|')
 		{
-			if (ft_pipe(&stock, str, &i, lexer) == 1)
+			if (ft_pipe(stock, str, &i, lexer) == 1)
 				break ;
 		}
 		else if (str[i] == '<' || str[i] == '>')
 		{
-			if (ft_redirection(&stock, str, &i, lexer) == 1)
+			if (ft_redirection(stock, str, &i, lexer) == 1)
 				break ;
 		}
 		else
 			i++;
 	}
-	return (NULL);
 }
 
 void	ft_add_node(t_lexer **lexer, char **stock, char ch)
@@ -58,7 +56,6 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 {
 	char	*rtn;
 	char	*tmp;
-	char	*tmp1;
 
 	rtn = ft_strdup("");
 	(*i)++;
@@ -67,34 +64,14 @@ char	*ft_scan_quotes(char *str, char c, int *i, int *j)
 	{
 		if (str[*i] == c)
 		{
-			(*i)++;
-			(*j)++;
-			if (str[*i] && (str[*i] == '"' || str[*i] == '\'' ))
-			{
-				if (str[*i] == '"')
-				{
-					tmp1 = ft_scan_quotes(str, '"', i, j);
-					rtn = ft_strjoin(rtn, tmp1);
-					free(tmp1);
-				}
-				else if (str[*i] == '\'')
-				{
-					tmp1 = ft_scan_quotes(str, '\'', i, j);
-					rtn = ft_strjoin(rtn, tmp1);
-					free(tmp1);
-				}
-			}
-			if (str[*i] == ' ' || str[*i] == '\t')
-				break ;
-			if (str[*i] && (str[*i] == '|' || str[*i] == '>' || str[*i] == '<'))
+			rtn = ft_qutes_util(str, rtn, i, j);
+			if (str[*i] && ft_check_case_01(str[*i]) == 1)
 				break ;
 		}
 		if (str[*i] == '\0' && (*j % 2) != 0)
-			return (free(rtn),ft_putendl_fd("Error: quote >...", 2), NULL);
-		else if (str[*i] == '\0' && (*j % 2) == 0)
+			return (free(rtn), ft_putendl_fd("Error: quote >...", 2), NULL);
+		else if ((*j % 2) == 0 && ft_check_case_02(str[*i] == 1))
 			return (rtn);
-		if ((str[*i] == ' ' || str[*i] == '\t') && (*j % 2) == 0)
-			break ;
 		tmp = ft_char_to_str(str[*i]);
 		rtn = ft_strjoin(rtn, tmp);
 		free(tmp);

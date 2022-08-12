@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 19:03:18 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/12 08:43:46 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	ft_while_env(t_env **env, char **envp, t_env **node, int *i);
 int		ft_find_char(char *str, char c);
 int		ft_skip_withespace(char *str, int i);
 char	*ft_char_to_str(char c);
+int		ft_check_case_01(char c);
+int		ft_check_case_02(char c);
 //parser
-void	*ft_parser(t_lexer **lexer, char *rtn);
+void	ft_parser(t_lexer **lexer, char *rtn, char **stock);
 int		ft_check_case(char c);
 char	*ft_scan_quotes(char *str, char c, int *i, int *j);
 char	*ft_scan_redirection(char *rtn, int *i, char c);
@@ -68,6 +70,7 @@ int		ft_pipe(char **stock, char *str, int *i, t_lexer **lexer);
 int		ft_redirection(char **stock, char *str, int *i, t_lexer **lexer);
 void	ft_else(char *str, char **stock, int *i, int *j);
 int		ft_string(t_lexer **lexer, char **stock, char *str, int *i);
+char	*ft_qutes_util(char *str, char *rtn, int *i, int *j);
 //node
 void	ft_lstadd_back(t_lexer **lst, t_lexer *new);
 t_lexer	*ft_lstnew(char *content);

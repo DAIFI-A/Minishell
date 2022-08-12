@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:08:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 19:15:45 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/12 08:31:08 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ int	ft_string(t_lexer **lexer, char **stock, char *str, int *i)
 			ft_add_node(lexer, stock, ch);
 	}
 	return (0);
+}
+
+char	*ft_qutes_util(char *str, char *rtn, int *i, int *j)
+{
+	char	*tmp;
+
+	(*i)++;
+	(*j)++;
+	if (str[*i] && (str[*i] == '"' || str[*i] == '\'' ))
+	{
+		tmp = ft_scan_quotes(str, str[*i], i, j);
+		rtn = ft_strjoin(rtn, tmp);
+		free(tmp);
+	}
+	return (rtn);
 }
