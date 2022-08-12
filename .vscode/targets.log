@@ -7,8 +7,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
  
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Tue Aug  9 18:56:00 2022
+
+# Make data base, printed on Fri Aug 12 18:07:34 2022
 
 # Variables
 
@@ -37,7 +39,7 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cc8w003327/T/vscode-ipc-0d0999f2-642b-46e5-ba0a-462b41a34c5e.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cc8w003327/T/vscode-ipc-f61f21be-b5fb-4aa4-8354-c9c4d96a313f.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -45,7 +47,7 @@ PATH = /Users/adaifi/goinfre/homebrew/bin:/Users/adaifi/goinfre/.brew/bin:/usr/l
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = 9766D340-FDCF-496D-A3FB-15C6C1DC95AD
+LaunchInstanceID = 2CE9D7C7-4686-4C1A-992A-F78A329BF004
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -53,7 +55,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.HMjrNr6nAv/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.IHNhSZbpsY/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -147,7 +149,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 49553
+VSCODE_PID = 771
 # variable set hash-table stats:
 # Load=68/1024=7%, Rehash=0, Collisions=1/89=1%
 
@@ -231,8 +233,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Tue Aug  9 18:56:00 2022
+# Finished Make data base on Fri Aug 12 18:07:34 2022
 
  
-make: *** No rule to make target `all'.  Stop.
-
