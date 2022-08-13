@@ -6,76 +6,95 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:38:47 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/11 17:09:00 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/12 20:43:30 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include"../mini.h"
 
-void	content_handler(t_lexer **arg)
+char	**env_str(t_env *env)
 {
-	int		fd;
-	int		fd1;
 	char	*str;
+	char	**envp;
 
-	while ((*arg) && ft_strcmp((*arg)->content, "|"))
+	str = "";
+	while (env)
 	{
-		if (!ft_strcmp((*arg)->content, ">"))
-			fd = open((*arg)->next->content, O_CREAT | O_WRONLY, 0777);
-		else if (!ft_strcmp((*arg)->content, "<"))
-			fd1 = open((*arg)->next->content, O_CREAT | O_RDONLY, 0777);
+		str = ft_strjoin(str, env->key);
+		str = ft_strjoin(str, "=");
+		str = ft_strjoin(str, env->value);
+		str = ft_strjoin(str, "$");
+		env = env->next;
+	}
+	envp = ft_split(str, '$');
+	return(envp);
+}
+
+char	*content_handler(t_lexer *arg, t_env *env, int i)
+{
+	char	*str;
+	int		in;
+	int		out;
+	char	**envp;
+
+	i = 0;
+	str = ft_strdup("");
+	while (arg && ft_strcmp(arg->content, "|"))
+	{
+		if (!ft_strcmp(arg->content, "<"))
+		{
+			arg = arg->next;
+			in = open(arg->content, O_RDONLY, 00777);
+		}
+		else if (!ft_strcmp(arg->content, ">"))
+		{
+			arg = arg->next;
+			out = open(arg->content, O_CREAT | O_WRONLY | O_TRUNC, 00777);
+		}
 		else
 		{
-			str = ft_strdup((*arg)->content);
-			while (*arg &&ft_strcmp((*arg)->content, "|"))
-			{
-				(*arg) = (*arg)->next;
-				str = ft_strjoin(str, " ");
-				str = ft_strjoin(str, (*arg)->content);
-			}
+			str = ft_strjoin(str, arg->content);
+			str = ft_strjoin(str, " ");
 		}
+		arg = arg->next;
 	}
-	puts(str);
+	envp = env_str(env);
+	execute_redir(envp, &env, str, in, out);
+	return (str);
 }
 
-// char	*parse_input(t_lexer	*arg)
+void	execute_redir(char **envp, t_env **env, char *str, int in, int out)
+{
+	char	**cmd;
+	pid_t	cpid;
+
+	cmd = ft_split(str, ' ');
+	cpid = fork();
+	if (cpid < 0)
+	{
+		g_exit_code = 1;
+		ft_putendl_fd("fork error\n", 2);
+	}
+	if (cpid == 0)
+	{
+		dup2(in, STDIN_FILENO);
+  		dup2(out, 1);
+		execve(get_path(env, cmd[0]), cmd, envp);
+	}
+	waitpid(cpid, NULL, 0);
+}
+
+// void	execute_pipe(t_env *env, t_lexer *arg, int i, char **envp)
 // {
-// 	char	*str;
-// 	char	**cmd;
-// 	int		i;
+// 	int		number_pipe;
+// 	int		*fd;
+// 	//pid_t	cpid;
 // 	int		j;
 
-// 	i = 0;
-// 	str = ft_strdup(arg->content)
-// 	while (arg)
-// 	{
-// 		arg = arg->next;
-// 		str = ft_strjoin(str, " ");
-// 		str = ft_strjoin(str, arg->content);
-// 	}
-// 	cmd = ft_split(str, '|');
-// 	while (cmd[i])
-// 	{
-// 		j = 0;
-// 		while (cmd[i][j])
-// 		{
-// 			if (!ft_strcmp((*arg)->content, ">"))
-				
-// 		}
-// 	}
+// 	(void)envp;
+// 	(void)env;
+// 	number_pipe = i * 2;
+// 	j = 0;
+// 	fd = (int *)malloc(sizeof(number_pipe));
+// 	content_handler(&arg);
 // }
-
-void	execute_pipe(t_env *env, t_lexer *arg, int i, char **envp)
-{
-	int		number_pipe;
-	int		*fd;
-	//pid_t	cpid;
-	int		j;
-
-	(void)envp;
-	(void)env;
-	number_pipe = i * 2;
-	j = 0;
-	fd = (int *)malloc(sizeof(number_pipe));
-	content_handler(&arg);
-}

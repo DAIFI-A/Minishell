@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:00:32 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/10 18:40:10 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/12 17:17:22 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	export_env(t_env **env, t_lexer *arg)
 	char	*key;
 
 	lst = (*env);
-	arg->flag = 1;
 	if (arg->next == NULL)
 	{
 		while ((*env))

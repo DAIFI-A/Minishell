@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:32:48 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/11 14:24:08 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/12 19:03:24 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str)
 	char	**cmd;
 
 	cmd  = ft_split(str, ' ');
+	(void)envp;
 	if (arg->content)
 	{
 		if (check_type(arg->content))
@@ -74,7 +75,7 @@ void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str)
 			cpid = fork();
 			if (!cpid)
 			{
-				if (execve(get_path(env, arg->content), cmd, envp) == -1)
+				// if (execve(get_path(env, arg->content), cmd, envp) == -1)
 					printf("command not found\n");
 			}
 			waitpid(cpid, NULL, 0);
@@ -98,12 +99,16 @@ void	check_cmd(t_env **env, t_lexer *arg, char **envp)
 		str = ft_strjoin(str, tmp->next->content);
 		if (!ft_strcmp(tmp->content, "|"))
 			i++;
+		if (!ft_strcmp(tmp->content, "<") || !ft_strcmp(tmp->content, ">"))
+			arg->flag = 1;
 		tmp = tmp->next;
 	}
 	if (!arg)
 		return ;
-	if (i == 0)
+	if (i == 0 && arg->flag == 1)
+		content_handler(arg, *env, i);
+	else if (i == 0 && arg->flag != 1)
 		one_cmd(env, arg, envp, str);
 	else
-		execute_pipe(*env, arg, i, envp);
+		content_handler(arg, *env, i);
 }

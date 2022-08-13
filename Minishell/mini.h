@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 14:41:42 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/12 20:43:25 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,6 @@ char	*get_keys(char *str, int c);
 void	env_env(t_lexer *arg, t_env *env);
 void	execute_pipe(t_env *env, t_lexer *arg, int i, char **envp);
 t_lexer	*ft_lst_new_prime(char *str);
+char	*content_handler(t_lexer *arg, t_env *env, int i);
+void	execute_redir(char **envp, t_env **env, char *str, int in, int out);
 #endif
