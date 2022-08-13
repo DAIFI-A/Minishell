@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:32:48 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/12 19:03:24 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/13 15:51:20 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	builting(t_env **env, t_lexer *arg)
 		env_env(arg, *env);
 	else if (!ft_strcmp(arg->content, "exit"))
 	{
+		//protect overflow;
 		if (arg->next->next)
 		{
 			printf("too many arguments\n");
@@ -75,7 +76,7 @@ void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str)
 			cpid = fork();
 			if (!cpid)
 			{
-				// if (execve(get_path(env, arg->content), cmd, envp) == -1)
+				if (execve(get_path(env, arg->content), cmd, envp) == -1)
 					printf("command not found\n");
 			}
 			waitpid(cpid, NULL, 0);
@@ -99,7 +100,7 @@ void	check_cmd(t_env **env, t_lexer *arg, char **envp)
 		str = ft_strjoin(str, tmp->next->content);
 		if (!ft_strcmp(tmp->content, "|"))
 			i++;
-		if (!ft_strcmp(tmp->content, "<") || !ft_strcmp(tmp->content, ">"))
+		if (!ft_strcmp(tmp->content, "<") || !ft_strcmp(tmp->content, ">") || !ft_strcmp(tmp->content , ">>" ) || !ft_strcmp(tmp->content , "<<" ))
 			arg->flag = 1;
 		tmp = tmp->next;
 	}
