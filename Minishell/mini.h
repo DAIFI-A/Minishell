@@ -88,8 +88,8 @@ char	*get_keys(char *str, int c);
 void	env_env(t_lexer *arg, t_env *env);
 void	execute_pipe(t_env *env, t_lexer *arg, int i, char **envp);
 t_lexer	*ft_lst_new_prime(char *str);
-char	*content_handler(t_lexer *arg, t_env *env, int i);
-void	execute_redir(char **envp, t_env **env, char *str, int in, int out);
+void	content_handler(t_lexer *arg, t_env *env, int i);
+void	execute_redir(t_lexer *arg, t_env **env, char *str, int in, int out);
 int		her_doc(t_lexer *arg);
 char	*get_next_line(int fd);
 #endif

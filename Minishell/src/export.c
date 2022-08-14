@@ -19,7 +19,7 @@ void	export_env(t_env **env, t_lexer *arg)
 	char	*key;
 
 	lst = (*env);
-	if (arg->next == NULL)
+	if (arg->next == NULL || !ft_strcmp(arg->next->content, ">"))
 	{
 		while ((*env))
 		{

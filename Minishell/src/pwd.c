@@ -16,7 +16,7 @@ void	pwd_env(t_lexer *arg)
 {
 	char	cwd[1024];
 
-	if (arg->next != NULL && arg->next->content)
+	if (arg->next != NULL && ft_strcmp(arg->next->content, ">"))
 	{
 		g_exit_code = 1;
 		ft_putendl_fd("pwd: too many arguments", 2);

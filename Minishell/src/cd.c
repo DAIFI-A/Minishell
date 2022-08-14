@@ -78,9 +78,8 @@ void	cd(t_env *env, t_lexer *arg)
 		cd_home(env);
 	while (arg->next)
 	{
-		if (chdir(arg->next->content))
+		if (chdir(arg->next->content) && ft_strcmp(arg->next->content, ">") && ft_strcmp(arg->next->content, "<"))
 		{
-			puts("yo");
 			ft_putendl_fd("No such file or directory", 2);
 			g_exit_code = 1;
 			return ;

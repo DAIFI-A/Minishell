@@ -62,7 +62,7 @@ void	env_env(t_lexer *arg, t_env *env)
 	t_env	*tmp;
 
 	tmp = env;
-	if (arg->next)
+	if (arg->next && ft_strcmp(arg->next->content, ">"))
 		return ;
 	while (tmp)
 	{
