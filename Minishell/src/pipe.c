@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:38:47 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/13 21:21:25 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/14 10:48:36 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*content_handler(t_lexer *arg, t_env *env, int i)
 		else if (!ft_strcmp(arg->content, "<<"))
 		{
 			arg = arg->next;
-			out = her_doc(arg);
+			her_doc(arg);
 			str = ft_strjoin(str, " tmp");
 		}
 		else
