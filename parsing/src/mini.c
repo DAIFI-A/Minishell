@@ -6,11 +6,13 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/12 16:18:42 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/14 19:24:31 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
+
+int	exit_status = 0;
 
 void	ft_sighandler(int sig)
 {
@@ -65,6 +67,7 @@ void	ft_handle(t_env *env)
 {
 	char	*rtn;
 	t_lexer	*lexer;
+	t_lexer	*top;
 	char	*stock;
 
 	while (1)
@@ -80,15 +83,27 @@ void	ft_handle(t_env *env)
 		add_history(rtn);
 		ft_parser(&lexer, rtn, &stock);
 		ft_expand(&lexer, env);
+		if (lexer != NULL)
+		{
+			top = lexer;
+				if (ft_strcmp(top->content, "env") == 0)
+					ft_env(env);
+				if (ft_strcmp(top->content, "pwd") == 0)
+					ft_pwd();
+				if (ft_strcmp(top->content, "exit") == 0)
+					ft_exit(top->next->content);
+				top = top->next;
+			}
 		// while (lexer)
 		// {
-		// 	printf("node == %s\n", lexer->content);
+		// 	printf("%s\n", lexer->content);
+		// 	// printf("%s\n", lexer->value);
 		// 	lexer = lexer->next;
 		// }
+		}
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
 		free(rtn);
-	}
 }
 
 int	main(int ac, char **av, char **envp)

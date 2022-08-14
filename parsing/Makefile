@@ -6,7 +6,7 @@ CFLAGS= -Wall -Wextra -Werror
 
 CFILES = mini.c ft_header.c ft_lexer.c ft_lst_lexer.c ft_lst_env.c \
 		 ft_parser.c ft_environment.c ft_expand.c ft_expand_utils.c \
-		 ft_parser_utils.c ft_lexer_utils.c \
+		 ft_parser_utils.c ft_lexer_utils.c ft_env.c\
 
 OFILES = $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 
