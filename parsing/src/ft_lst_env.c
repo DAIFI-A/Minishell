@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 12:54:37 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/07 15:15:25 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/15 16:33:25 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	*lst = tmp;
 }
 
-t_env	*ft_lstnew_env(char *name, char *value)
+t_env	*ft_lstnew_env(char *name, char *value, int yes)
 {
 	t_env	*node;
 
@@ -38,7 +38,9 @@ t_env	*ft_lstnew_env(char *name, char *value)
 	if (node == NULL)
 		return (NULL);
 	node->name = ft_strdup(name);
-	node->value = ft_strdup(value);
+	if (value)
+		node->value = ft_strdup(value);
+	node->yes = yes;
 	node->next = NULL;
 	return (node);
 }

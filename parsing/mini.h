@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/14 19:23:50 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/15 16:53:44 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct environment
 {
 	char				*name;
 	char				*value;
+	int					index;
+	int					yes;
 	struct environment	*next;
 }t_env;
 
@@ -39,6 +41,9 @@ typedef struct environment
 void	ft_env(t_env *env);
 void	ft_pwd();
 void	ft_exit(char *status);
+int		ft_isdigit(int c);
+void	ft_export(t_env **env, char *content);
+int		ft_locate_char(char *str, char ch);
 //main
 int		ft_buffer(char *buff);
 void	ft_free_lst(t_lexer **head);
@@ -57,7 +62,7 @@ char	*ft_join_value(t_env *env, char **stock, char *rtn);
 //envp
 t_env	*ft_environment(char **envp, t_env *env);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
-t_env	*ft_lstnew_env(char *name, char *value);
+t_env	*ft_lstnew_env(char *name, char *value, int yes);
 void	ft_free_2d(char **ptr);
 void	ft_while_env(t_env **env, char **envp, t_env **node, int *i);
 //lexer

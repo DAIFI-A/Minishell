@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/14 19:24:31 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/15 16:22:47 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,37 @@ void	ft_handle(t_env *env)
 		add_history(rtn);
 		ft_parser(&lexer, rtn, &stock);
 		ft_expand(&lexer, env);
+		top = lexer;
 		if (lexer != NULL)
 		{
-			top = lexer;
-				if (ft_strcmp(top->content, "env") == 0)
-					ft_env(env);
-				if (ft_strcmp(top->content, "pwd") == 0)
-					ft_pwd();
-				if (ft_strcmp(top->content, "exit") == 0)
-					ft_exit(top->next->content);
-				top = top->next;
+			if (ft_strcmp(lexer->content, "env") == 0)
+				ft_env(env);
+			if (ft_strcmp(lexer->content, "pwd") == 0)
+				ft_pwd();
+			if (ft_strcmp(lexer->content, "exit") == 0)
+			{
+				if (lexer->next == NULL)
+				{
+					printf("Exit\n");
+					exit(exit_status);
+				}
+				else
+					ft_exit(lexer->next->content);
 			}
+			if (ft_strcmp(lexer->content, "export") == 0)
+			{
+				if (!lexer->next)
+					ft_export(&env, NULL);
+				else
+					ft_export(&env, lexer->next->content);
+			}
+			lexer = lexer->next;
+		}
+		lexer = top;
 		// while (lexer)
 		// {
 		// 	printf("%s\n", lexer->content);
-		// 	// printf("%s\n", lexer->value);
+		// 	// printf("%s\n", lexer->next->content);
 		// 	lexer = lexer->next;
 		// }
 		}

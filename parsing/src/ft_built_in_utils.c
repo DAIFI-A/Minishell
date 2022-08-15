@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_built_in_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 18:28:11 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/14 19:26:19 by med-doba         ###   ########.fr       */
+/*   Created: 2022/08/15 16:50:36 by med-doba          #+#    #+#             */
+/*   Updated: 2022/08/15 16:53:28 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-void	ft_env(t_env *env)
+int	ft_locate_char(char *str, char ch)
 {
-	while (env)
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		printf("%s=", env->name);
-		printf("%s\n", env->value);
-		env = env->next;
+		if (str[i] == ch)
+			return (0);
+		i++;
 	}
-}
-
-void	ft_pwd()
-{
-	printf("%s\n", getcwd(NULL, 0));
-}
-
-void	ft_exit(char *str)
-{
-	int num;
-
-	num = ft_atoi(str);
-	printf("num= %d\n", num);
-	exit(num);
+	return (1);
 }
