@@ -42,6 +42,7 @@ void	ft_handle(t_env *env, char **envp)
 {
 	char	*rtn;
 	t_lexer *lexer;
+	t_fds	fd;
 
 	while (1)
 	{
@@ -56,7 +57,7 @@ void	ft_handle(t_env *env, char **envp)
 		add_history(rtn);
 		ft_parser(&lexer, rtn);
 		ft_expand(&lexer, env);
-		check_cmd(&env, lexer, envp);
+		check_cmd(&env, lexer, &fd, envp);
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
 		free(rtn);

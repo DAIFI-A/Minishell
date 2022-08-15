@@ -25,9 +25,11 @@ void	echo(t_lexer *arg)
 		printf("\n");
 		return ;
 	}
+	str = ft_strdup(arg->content);
 	while (arg->next)
 	{
-		str = ft_strdup(arg->content);
+		if (arg->next->content[0] == '<' || arg->next->content[0] == '>' || arg->next->content[0] == '|')
+			break ;
 		output = ft_strjoin(output, " ");
 		output = ft_strjoin(output, arg->next->content);
 		arg = arg->next;

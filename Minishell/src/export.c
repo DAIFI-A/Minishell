@@ -19,7 +19,8 @@ void	export_env(t_env **env, t_lexer *arg)
 	char	*key;
 
 	lst = (*env);
-	if (arg->next == NULL || !ft_strcmp(arg->next->content, ">"))
+	if (!arg->next || arg->next->content[0] == '>' || arg->next->content[0] == '|'
+	|| arg->next->content[0] == '<')
 	{
 		while ((*env))
 		{
@@ -37,12 +38,11 @@ void	export_env(t_env **env, t_lexer *arg)
 		{
 			key = ft_strdup(arg->next->content);
 			key = get_keys(key, '=');
-			if (!key || (!ft_isalpha(key[0]) && ft_strcmp(key, "_") != 0))
-			{
-				g_exit_code = 1;
-				printf("export: `%s': not a valid identifier\n", key);
-				break ;
-			}
+			if (arg->next->content[0] == '>' || arg->next->content[0] == '|'
+			|| arg->next->content[0] == '<')
+				return (free(key));
+			else if (!key || (!ft_isalpha(key[0]) && ft_strcmp(key, "_")))
+				return (g_exit_code = 1, printf("export: error"), free(key));
 			if (!ft_strcmp(key, (*env)->key))
 			{
 				(*env)->value = ft_strdup(ft_strchr(arg->next->content, '=') + 1);

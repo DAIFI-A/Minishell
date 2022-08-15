@@ -17,24 +17,28 @@ void	unset_env(t_env **env, t_lexer *arg)
 	t_env	*tmp;
 	t_env	*lst;
 	t_env	*env_back;
+	t_lexer	*cmd;
 	char	*str;
 
 	tmp = NULL;
 	str = NULL;
-	while (arg->next)
+	cmd = arg;
+	while (cmd->next)
 	{
-		str = arg->next->content;
+		str = cmd->next->content;
 		env_back = (*env);
-		if ((!ft_isalpha(str[0]) && ft_strcmp(&str[0], "_") != 0))
+		if (str[0] == '>' || str[0] == '|' || str[0] == '<')
+			return ;
+		if (!ft_isalpha(str[0]) && ft_strcmp(&str[0], "_"))
 		{
 			g_exit_code = 2;
-			ft_putendl_fd("Error: invalide inditifier", 2);
+			ft_putendl_fd("invalide inditifier", 2);
 		}
 		while((*env))
 		{
 			if ((*env)->key)
 			{
-				if (ft_strcmp((*env)->key, arg->next->content))
+				if (cmd->next && ft_strcmp((*env)->key, cmd->next->content))
 				{
 					lst = ft_lst_new1((*env)->key, (*env)->value);
 					ft_lstadd_back_prime(&tmp, lst);
@@ -51,8 +55,7 @@ void	unset_env(t_env **env, t_lexer *arg)
 			free(*env);
 			*env = env_back->next;
 		}
-		arg = arg->next;
+		cmd = cmd->next;
 		*env = tmp;
-		tmp = NULL;
 	}
 }

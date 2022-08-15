@@ -35,6 +35,14 @@ typedef struct lexer{
 	int				flag;
 }	t_lexer;
 
+typedef struct fds
+{
+	int		in;
+	int		out;
+	int		*fd;
+}	t_fds;
+
+
 typedef struct environment
 {
 	char				*key;
@@ -75,7 +83,7 @@ void	cd_home(t_env *env);
 int		check_type(char *arg);
 void	builting(t_env **env, t_lexer *arg);
 void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str);
-void	check_cmd(t_env **env, t_lexer *arg, char **envp);
+void	check_cmd(t_env **env, t_lexer *arg, t_fds *fd, char **envp);
 void	pwd_env(t_lexer *arg);
 char	*get_path(t_env **env, char *cmd);
 void	unset_env(t_env **env, t_lexer *arg);
@@ -86,10 +94,10 @@ t_env	*ft_lst_new1(char *key, char *value);
 void	ft_lstadd_back_prime(t_env **lst, t_env *node);
 char	*get_keys(char *str, int c);
 void	env_env(t_lexer *arg, t_env *env);
-void	execute_pipe(t_env *env, t_lexer *arg, int i, char **envp);
+void	execute_pipe(t_env *env, t_lexer *arg, t_fds *fds, int i);
 t_lexer	*ft_lst_new_prime(char *str);
-void	content_handler(t_lexer *arg, t_env *env, int i);
-void	execute_redir(t_lexer *arg, t_env **env, char *str, int in, int out);
+void	content_handler(t_lexer **arg, t_env *env, t_fds *fds);
+void	execute_redir(t_lexer *arg, t_env **env, t_fds *fds, char *str);
 int		her_doc(t_lexer *arg);
 char	*get_next_line(int fd);
 #endif

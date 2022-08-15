@@ -85,7 +85,7 @@ void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str)
 	return ;
 }
 
-void	check_cmd(t_env **env, t_lexer *arg, char **envp)
+void	check_cmd(t_env **env, t_lexer *arg, t_fds *fds, char **envp)
 {
 	int		i;
 	t_lexer	*tmp;
@@ -107,9 +107,13 @@ void	check_cmd(t_env **env, t_lexer *arg, char **envp)
 	if (!arg)
 		return ;
 	if (i == 0 && arg->flag == 1)
-		content_handler(arg, *env, i);
+	{
+		fds->in = dup(STDIN_FILENO);
+		fds->out = dup(STDOUT_FILENO);
+		content_handler(&arg, *env, fds);
+	}
 	else if (i == 0 && arg->flag != 1)
 		one_cmd(env, arg, envp, str);
 	else
-		content_handler(arg, *env, i);
+		execute_pipe(*env, arg, fds, i);
 }
