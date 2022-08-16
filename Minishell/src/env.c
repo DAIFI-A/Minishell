@@ -57,17 +57,16 @@
 // 	return (env);
 // }
 
-void	env_env(t_lexer *arg, t_env *env)
+void	env_env(t_env *env)
 {
 	t_env	*tmp;
 
 	tmp = env;
-	(void)arg;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->value, "\0") != 0)
 		{
-			if (tmp->key && tmp->value)
+			if (tmp && tmp->key && tmp->value)
 				printf("%s=%s\n", tmp->key, tmp->value);
 		}
 		tmp = tmp->next;

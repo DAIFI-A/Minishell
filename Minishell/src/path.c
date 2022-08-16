@@ -12,7 +12,7 @@
 
 #include"../mini.h"
 
-char	*get_path(t_env **env, char *cmd)
+char	*get_path(t_env *env, char *cmd)
 {
 	char	**paths;
 	char	*path;
@@ -20,9 +20,9 @@ char	*get_path(t_env **env, char *cmd)
 	char	*tmp;
 
 	i = 0;
-	while ((*env) && (*env)->key && ft_strcmp((*env)->key, "PATH"))
-		(*env) = (*env)->next;
-	paths = ft_split((*env)->value , ':');
+	while (env && env->key && ft_strcmp(env->key, "PATH"))
+		env = env->next;
+	paths = ft_split(env->value , ':');
 	if (paths == NULL)
 		return (NULL);
 	i = 0;

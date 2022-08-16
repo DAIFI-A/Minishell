@@ -22,10 +22,10 @@ void	unset_env(t_env **env, t_lexer *arg)
 
 	tmp = NULL;
 	str = NULL;
-	cmd = arg;
-	while (cmd->next)
+	cmd = arg->next;
+	while (cmd && env)
 	{
-		str = cmd->next->content;
+		str = cmd->content;
 		env_back = (*env);
 		if (str[0] == '>' || str[0] == '|' || str[0] == '<')
 			return ;
@@ -38,7 +38,7 @@ void	unset_env(t_env **env, t_lexer *arg)
 		{
 			if ((*env)->key)
 			{
-				if (cmd->next && ft_strcmp((*env)->key, cmd->next->content))
+				if (ft_strcmp((*env)->key, cmd->content))
 				{
 					lst = ft_lst_new1((*env)->key, (*env)->value);
 					ft_lstadd_back_prime(&tmp, lst);
@@ -57,5 +57,6 @@ void	unset_env(t_env **env, t_lexer *arg)
 		}
 		cmd = cmd->next;
 		*env = tmp;
+		tmp = NULL;
 	}
 }

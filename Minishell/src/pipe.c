@@ -30,13 +30,17 @@ char	**env_str(t_env *env)
 	return(envp);
 }
 
-void	content_handler(t_lexer **arg, t_env *env, t_fds *fds)
+void	content_handler(t_lexer **arg, t_env **env, t_fds *fds)
 {
 	char	*str;
 	t_lexer	*tmp;
+	int		tmp_in;
+	int		tmp_out;
 
 	tmp = *arg;
 	str = ft_strdup("");
+	tmp_in = dup(0);
+	tmp_out = dup(1);
 	while ((*arg) && ft_strcmp((*arg)->content, "|"))
 	{
 		if (!ft_strcmp((*arg)->content, "<"))
@@ -72,7 +76,11 @@ void	content_handler(t_lexer **arg, t_env *env, t_fds *fds)
 	}
 	if (*str == '\0')
 		return (printf("command not found\n"), g_exit_code = 127,free(str));
-	execute_redir(tmp, &env, fds, str);
+	dup2(tmp_in, STDIN_FILENO);
+	dup2(tmp_out, STDOUT_FILENO);
+	close(tmp_in);
+	close(tmp_out);
+	execute_redir(tmp, env, fds, str);
 	unlink("tmp");
 }
 
@@ -102,14 +110,14 @@ void	execute_redir(t_lexer *arg, t_env **env, t_fds *fds, char *str)
 			return (g_exit_code = 1, ft_putendl_fd("fork error\n", 2));
 		if (cpid == 0)
 		{
-			if (get_path(env, cmd[0]) == NULL)
+			if (get_path(*env, cmd[0]) == NULL)
 			{
 				g_exit_code = 127;
 				printf("command not found\n");
-				exit(1);
+				exit(127);
 			}
 			envp = env_str(*env);
-			execve(get_path(env, cmd[0]), cmd, envp);
+			execve(get_path(*env, cmd[0]), cmd, envp);
 		}
 		waitpid(cpid, NULL, 0);
 	}
@@ -153,7 +161,7 @@ void	execute_pipe(t_env *env, t_lexer *arg, t_fds *fds, int i)
 			fds->in = dup(fds->fd[(j - 1) * 2]);
 			fds->out = dup(1);
 		}
-		content_handler(&arg, env, fds);
+		content_handler(&arg, &env, fds);
 		if (arg && arg->next != NULL)
 			arg = arg->next;
 		close(fds->fd[(j * 2) + 1]);

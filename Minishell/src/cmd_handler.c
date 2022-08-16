@@ -44,7 +44,7 @@ void	builting(t_env **env, t_lexer *arg)
 	else if (!ft_strcmp(arg->content, "export"))
 		export_env(env, arg);
 	else if (!ft_strcmp(arg->content, "env"))
-		env_env(arg, *env);
+		env_env(*env);
 	else if (!ft_strcmp(arg->content, "exit"))
 	{
 		//protect overflow;
@@ -76,7 +76,7 @@ void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str)
 			cpid = fork();
 			if (!cpid)
 			{
-				if (execve(get_path(env, arg->content), cmd, envp) == -1)
+				if (execve(get_path(*env, arg->content), cmd, envp) == -1)
 					printf("command not found\n");
 			}
 			waitpid(cpid, NULL, 0);
@@ -93,6 +93,7 @@ void	check_cmd(t_env **env, t_lexer *arg, t_fds *fds, char **envp)
 
 	i =  0;
 	tmp = arg;
+	// (void)envp;
 	str = ft_strdup(tmp->content);
 	while (tmp->next)
 	{
@@ -110,7 +111,7 @@ void	check_cmd(t_env **env, t_lexer *arg, t_fds *fds, char **envp)
 	{
 		fds->in = dup(STDIN_FILENO);
 		fds->out = dup(STDOUT_FILENO);
-		content_handler(&arg, *env, fds);
+		content_handler(&arg, env, fds);
 	}
 	else if (i == 0 && arg->flag != 1)
 		one_cmd(env, arg, envp, str);
