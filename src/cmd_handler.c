@@ -36,7 +36,7 @@ int	check_type(char *arg)
 void	builting(t_env **env, t_lexer *arg)
 {
 	if (!ft_strcmp(arg->content, "pwd"))
-		pwd_env(arg);
+		pwd_env();
 	else if (!ft_strcmp(arg->content, "cd"))
 		cd(*env, arg);
 	else if (!ft_strcmp(arg->content, "unset"))
@@ -50,9 +50,9 @@ void	builting(t_env **env, t_lexer *arg)
 	else if (!ft_strcmp(arg->content, "exit"))
 	{
 		if (!arg->next)
-			exit(g_exit_code);
+			exit(var.exit_status);
 		else if (arg->next->next)
-			return (g_exit_code = 1, printf("too many arguments\n"), (void)arg);
+			return (var.exit_status = 1, printf("too many args\n"), (void)arg);
 		else if (arg->next)
 			exit(ft_atoi(arg->next->content));
 	}
@@ -62,18 +62,14 @@ void	check_cmd(t_env **env, t_lexer *arg, t_fds *fds)
 {
 	int		i;
 	t_lexer	*tmp;
-	char	*str;
 
-	i =  0;
+	i = 0;
 	if (!arg)
 		return ;
 	var.id = 0;
 	tmp = arg;
-	str = ft_strdup(tmp->content);
 	while (tmp->next)
 	{
-		str = ft_strjoin(str, " ");
-		str = ft_strjoin(str, tmp->next->content);
 		if (!ft_strcmp(tmp->content, "|"))
 			i++;
 		tmp = tmp->next;

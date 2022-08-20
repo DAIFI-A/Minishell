@@ -29,7 +29,7 @@ void	cd_home(t_env *env)
 		env = env->next;
 	}
 	if (!home)
-		return (g_exit_code = 1, ft_putendl_fd("Home not set", 2));
+		return (var.exit_status = 1, ft_putendl_fd("Home not set", 2));
 	else
 		chdir(home);
 	update_pwd(&lst, home);
@@ -55,15 +55,14 @@ void	cd(t_env *env, t_lexer *arg)
 		node = ft_lstnew_env("PWD", getcwd(NULL, 0));
 		ft_lstadd_back_env(&env, node);
 	}
-	if (!arg->next || arg->next->content[0] == '>' || arg->next->content[0] == '<')
+	if (!arg->next || ft_multiple_check(arg->next->content) == 2)
 		cd_home(env);
 	while (arg->next)
 	{
-		if (arg->next->content[0] == '>' || arg->next->content[0] == '|'
-		|| arg->next->content[0] == '<')
+		if (ft_multiple_check(arg->next->content) == 2)
 			break ;
 		if (chdir(arg->next->content))
-			return (ft_putendl_fd("Error: No such file or directory", 2), g_exit_code = 1, (void)arg);
+			return (ft_putendl_fd("No such file or directory", 2), var.exit_status = 1, (void)arg);
 		update_pwd(&lst, "");
 		arg = arg->next;
 	}

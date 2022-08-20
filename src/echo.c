@@ -20,7 +20,7 @@ void	echo(t_lexer *arg)
 	int		i;
 
 	i = 1;
-	if (!ft_strcmp(arg->next->content, "") || !arg->next)
+	if (arg && !arg->next)
 		return (printf("\n"), (void)arg);
 	str = ft_strdup(arg->content);
 	while (arg->next)

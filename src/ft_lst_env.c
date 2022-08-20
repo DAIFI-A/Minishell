@@ -14,7 +14,7 @@
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (lst == NULL || *lst == NULL)
 	{
@@ -39,8 +39,6 @@ t_env	*ft_lstnew_env(char *key, char *value)
 		return (NULL);
 	node->key = ft_strdup(key);
 	node->value = ft_strdup(value);
-	// printf("%s=", node->key);
-	// printf("%s\n", node->value);
 	node->next = NULL;
 	return (node);
 }

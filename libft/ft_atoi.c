@@ -36,6 +36,6 @@ long	ft_atoi(const char *str)
 		j++;
 	}
 	if ((f * nb) > __INT_MAX__ && (f * nb) < INT_MIN)
-		return (ft_putendl_fd("Error: nbr overflow", 2) , exit(1), 0);
+		return (ft_putendl_fd("Error: nbr overflow", 2), exit(1), 0);
 	return (f * nb);
 }

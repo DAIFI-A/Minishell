@@ -12,22 +12,24 @@
 
 #include "../mini.h"
 
-void	ft_sighandler(int sig)
+void    ft_sighandler(int sig)
 {
-	if (sig == SIGINT && var.id == 1)
-	{
-		var.id = 0;
-		return (kill(var.cpid, SIGKILL), (void)sig);
-	}
-	else if (sig == SIGINT && ft_strcmp(var.usr, "./minishell") == 0)
-		return;
-	else if (sig == 2 && var.id == 0)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}	
+    if (sig == 2 && var.id == 0)
+    {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+    else if (sig == 2 && var.id == 1 && strncmp(var.usr, "./minishell", 11))
+    {
+        printf("\n");
+    }
+    if (sig == 3 && var.id == 1 && strncmp(var.usr, "./minishell", 11))
+    {
+        printf("Quit: 3");
+        printf("\n");
+    }
 }
 
 void	ft_free_lst(t_lexer **head)
@@ -67,6 +69,7 @@ void	ft_handle(t_env *env)
 	while (1)
 	{
 		lexer = NULL;
+		var.id = 0;
 		rtn = readline("MiniShell>$");
 		if (rtn == NULL)
 		{
@@ -78,6 +81,7 @@ void	ft_handle(t_env *env)
 		add_history(rtn);
 		ft_parser(&lexer, rtn, &stock);
 		ft_expand(&lexer, env);
+		var.id = 1;
 		check_cmd(&env, lexer, &fd);
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
@@ -85,20 +89,29 @@ void	ft_handle(t_env *env)
 	}
 }
 
+void    ft_init_global(void)
+{
+    var.exit_status = 0;
+    var.id = 0;
+    var.cpid = 0;
+    var.usr = NULL;
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_env	*env;
 
-	var.usr = "yo";
-	env = NULL;
 	ft_header();
 	(void)ac;
-	(void)av;
-	signal(2, ft_sighandler);
-	rl_catch_signals = 0;
-	signal(3, SIG_IGN);
-	env = ft_environment(envp, env);
-	ft_handle(env);
-	ft_free_lst_env(&env);
-	return (0);
+    (void)av;
+    env = NULL;
+    ft_header();
+    ft_init_global();
+    rl_catch_signals = 0;
+    signal(2, ft_sighandler);
+    signal(3, ft_sighandler);
+    env = ft_environment(envp, env);
+    ft_handle(env);
+    ft_free_lst_env(&env);
+    return (0);
 }

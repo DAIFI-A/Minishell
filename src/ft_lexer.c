@@ -14,7 +14,7 @@
 
 int	ft_skip_withespace(char *str, int i)
 {
-	while(str[i] && (str[i] == ' ' || str[i] == '\t'))
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	return (i);
 }

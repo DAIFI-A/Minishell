@@ -28,13 +28,12 @@
 # include <readline/readline.h>
 # include "libft/libft.h"
 
-int		g_exit_code;
-
-struct jehgrouehrgou
+struct s_jehgrouehrgou
 {
 	int		id;
 	pid_t	cpid;
 	char	*usr;
+	int		exit_status;
 } var;
 
 typedef struct lexer{
@@ -50,7 +49,6 @@ typedef struct fds
 	int		out;
 	int		*fd;
 }	t_fds;
-
 
 typedef struct environment
 {
@@ -77,6 +75,7 @@ int		ft_multiple_check(char *arg);
 void	ft_print_exported(t_env **env);
 void	ft_add_export(char *str, t_env **env);
 void	ft_free_lst(t_lexer **head);
+void	ft_init_global(void);
 //envp
 t_env	*ft_environment(char **envp, t_env *env);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
@@ -116,11 +115,14 @@ int		check_type(char *arg);
 void	builting(t_env **env, t_lexer *arg);
 void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str);
 void	check_cmd(t_env **env, t_lexer *arg, t_fds *fd);
-void	pwd_env();
+void	pwd_env(void);
 char	*get_path(char *cmd);
 void	unset_env(t_env **env, t_lexer *arg);
+t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg);
+void	free_env(t_env *env);
 void	echo(t_lexer *arg);
-void	*export_env(t_env **env, t_lexer *arg);
+void	export_env(t_env **env, t_lexer *arg);
+void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst);
 void	cd(t_env *env, t_lexer *arg);
 t_env	*ft_lst_new1(char *key, char *value);
 void	ft_lstadd_back_prime(t_env **lst, t_env *node);

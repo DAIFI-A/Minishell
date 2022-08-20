@@ -75,7 +75,7 @@ void	content_handler(t_lexer **arg, t_env **env, t_fds *fds)
 		(*arg) = (*arg)->next;
 	}
 	if (*str == '\0')
-		return (printf("command not found\n"), g_exit_code = 127, free(str));
+		return (printf("command not found\n"), var.exit_status = 127, free(str));
 	dup2(tmp_in, STDIN_FILENO);
 	dup2(tmp_out, STDOUT_FILENO);
 	close(tmp_in);
@@ -93,7 +93,7 @@ void	execute_redir(t_lexer *arg, t_env **env, t_fds *fds, char *str)
 
 	cmd = ft_split(str, ' ');
 	if (fds->in < 0 || fds->out < 0)
-		return (g_exit_code = 1, printf("fd rerror\n"), free(str));
+		return (var.exit_status = 1, printf("fd rerror\n"), free(str));
 	tmp_in = dup(0);
 	tmp_out = dup(1);
 	dup2(fds->in, STDIN_FILENO);
@@ -107,11 +107,11 @@ void	execute_redir(t_lexer *arg, t_env **env, t_fds *fds, char *str)
 		var.cpid = fork();
 		var.id += 1;
 		if (var.cpid < 0)
-			return (g_exit_code = 1, ft_putendl_fd("fork error\n", 2));
+			return (var.exit_status = 1, ft_putendl_fd("fork error\n", 2));
 		if (var.cpid == 0)
 		{
 			if (get_path(cmd[0]) == NULL)
-				return (g_exit_code = 127, printf("command not found\n"), exit(127));
+				return (var.exit_status = 127, printf("command not found\n"), exit(127));
 			envp = env_str(*env);
 			execve(get_path(cmd[0]), cmd, envp);
 		}

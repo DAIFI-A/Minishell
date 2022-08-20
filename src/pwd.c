@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include"../mini.h"
+#include"../mini.h"
 
-void	pwd_env()
+void	pwd_env(void)
 {
 	char	cwd[1024];
 
@@ -20,7 +20,7 @@ void	pwd_env()
 		ft_putendl_fd(cwd, 1);
 	else
 	{
-		g_exit_code = 1;
+		var.exit_status = 1;
 		ft_putendl_fd("Unable to get working directory", 2);
 	}
 }

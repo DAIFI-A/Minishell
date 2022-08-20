@@ -12,37 +12,23 @@
 
 #include "../mini.h"
 
-void	*export_env(t_env **env, t_lexer *arg)
+void	export_env(t_env **env, t_lexer *arg)
 {
 	t_env	*lst;
-	char	*key;
 
 	lst = (*env);
 	ft_sort_env(env);
 	if (arg->next && ft_multiple_check(arg->next->content))
 	{
 		if (arg->next->ch == '"' || arg->next->ch == '\'')
-			ft_putendl_fd("Error: not a valid identifier", 2);
-		return (NULL);
+			return (ft_putendl_fd("Error: not a valid identifier", 2));
 	}
-	if (!arg->next)
-		return (ft_print_exported(env), NULL);
+	if (!arg->next || ft_multiple_check(arg->next->content) == 2)
+		return (ft_print_exported(env));
 	while (arg)
 	{
 		lst = (*env);
-		while ((*env) && arg->next)
-		{
-			key = get_keys(arg->next->content, '=');
-			if (!key || (!ft_isalpha(key[0]) && ft_strcmp(key, "_")))
-				return (g_exit_code = 1, ft_putendl_fd("Error: export", 2), NULL);
-			if (!ft_strcmp(key, (*env)->key))
-			{
-				(*env)->value = ft_strdup(ft_strchr(arg->next->content, '=') + 1);
-				(*env) = lst;
-				break ;
-			}
-			(*env) = (*env)->next;
-		}
+		set_env_existed(env, arg, &lst);
 		if ((*env) == NULL)
 		{
 			(*env) = lst;
@@ -50,7 +36,28 @@ void	*export_env(t_env **env, t_lexer *arg)
 		}
 		arg = arg->next;
 	}
-	return (NULL);
+	return ;
+}
+
+void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst)
+{
+	char	*key;
+
+	while ((*env) && arg->next)
+	{
+		key = get_keys(arg->next->content, '=');
+		if (ft_multiple_check(arg->next->content) == 2)
+			break ;
+		else if (!key || (ft_multiple_check(key) == 1 && ft_strcmp(key, "_")))
+			return (var.exit_status = 1, ft_putendl_fd("Error: export", 2));
+		if (!ft_strcmp(key, (*env)->key))
+		{
+			(*env)->value = ft_strdup(ft_strchr(arg->next->content, '=') + 1);
+			*env = *lst;
+			break ;
+		}
+		(*env) = (*env)->next;
+	}
 }
 
 void	ft_print_exported(t_env **env)
@@ -63,29 +70,21 @@ void	ft_print_exported(t_env **env)
 	top = *env;
 	i = 0;
 	while (tmp)
+	{
+		(*env) = top;
+		while ((*env))
 		{
-			(*env) = top;
-			while ((*env))
+			if ((*env)->key && (*env)->value && (*env)->index == i)
 			{
-				if ((*env)->key && (*env)->value && (*env)->index == i)
-				{
-					printf("declare -x %s=\"%s\"\n", (*env)->key, (*env)->value);
-					i++;
-					break;
-				}
-				(*env) = (*env)->next;
+				printf("declare -x %s=\"%s\"\n", (*env)->key, (*env)->value);
+				i++;
+				break ;
 			}
-			tmp = tmp->next;
+			(*env) = (*env)->next;
 		}
+		tmp = tmp->next;
+	}
 	(*env) = top;
-}
-
-int	ft_multiple_check(char *arg)
-{
-	if ((arg[0] == '>' || arg[0] == '|' || arg[0] == '<'))
-		return (1);
-	else
-		return (0);
 }
 
 void	ft_sort_env(t_env **env)
@@ -121,6 +120,8 @@ void	ft_add_export(char *str, t_env **env)
 
 	value = ft_strchr(str, '=') + 1;
 	key = get_keys(str, '=');
+	if (ft_multiple_check(key) == 1)
+		return (var.exit_status = 1, ft_putendl_fd("Export : error", 2));
 	lst = ft_lst_new1(key, value);
 	ft_lstadd_back_prime(env, lst);
 }

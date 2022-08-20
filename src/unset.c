@@ -12,51 +12,60 @@
 
 #include"../mini.h"
 
+t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg)
+{
+	t_env	*lst;
+
+	while (env)
+	{
+		if (ft_strcmp(env->key, arg->content))
+		{
+			lst = ft_lst_new1(env->key, env->value);
+			ft_lstadd_back_prime(&tmp, lst);
+		}
+		env = env->next;
+	}
+	return (tmp);
+}
+
 void	unset_env(t_env **env, t_lexer *arg)
 {
 	t_env	*tmp;
-	t_env	*lst;
 	t_env	*env_back;
-	t_lexer	*cmd;
 	char	*str;
 
 	tmp = NULL;
 	str = NULL;
-	cmd = arg->next;
-	while (cmd && env)
+	while (arg && env)
 	{
-		str = cmd->content;
+		str = arg->content;
 		env_back = (*env);
 		if (str[0] == '>' || str[0] == '|' || str[0] == '<')
 			return ;
-		if (!ft_isalpha(str[0]) && ft_strcmp(&str[0], "_"))
+		if (ft_multiple_check(str) == 1 && ft_strcmp(&str[0], "_"))
 		{
-			g_exit_code = 2;
+			var.exit_status = 2;
 			ft_putendl_fd("invalide inditifier", 2);
 		}
-		while((*env))
-		{
-			if ((*env)->key)
-			{
-				if (ft_strcmp((*env)->key, cmd->content))
-				{
-					lst = ft_lst_new1((*env)->key, (*env)->value);
-					ft_lstadd_back_prime(&tmp, lst);
-				}
-			}
-			(*env) = (*env)->next;
-		}
+		tmp = unset(*env, tmp, arg);
 		(*env) = env_back;
-		while (*env)
-		{
-			env_back = *env;
-			free((*env)->key);
-			free((*env)->value);
-			free(*env);
-			*env = env_back->next;
-		}
-		cmd = cmd->next;
+		free_env(*env);
+		arg = arg->next;
 		*env = tmp;
 		tmp = NULL;
+	}
+}
+
+void	free_env(t_env *env)
+{
+	t_env	*env_back;
+
+	while (env)
+	{
+		env_back = env;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = env_back->next;
 	}
 }

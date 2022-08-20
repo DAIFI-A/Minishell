@@ -22,7 +22,7 @@ t_env	*ft_lst_new1(char *key, char *value)
 	lst->key = ft_strdup(key);
 	lst->value = ft_strdup(value);
 	lst->next = NULL;
-	return(lst);
+	return (lst);
 }
 
 void	ft_lstadd_back_prime(t_env **lst, t_env *node)
@@ -61,4 +61,20 @@ char	*get_keys(char *str, int c)
 		return (h);
 	}
 	return (str);
+}
+
+int	ft_multiple_check(char *arg)
+{
+	int		i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[0] == '>' || arg[0] == '|' || arg[0] == '<')
+			return (2);
+		if (!ft_isalpha(arg[i]) || arg[i] == ' ')
+			return (1);
+		i++;
+	}
+	return (0);
 }

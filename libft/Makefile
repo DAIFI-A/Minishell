@@ -25,7 +25,7 @@ FCT =	ft_atoi.c ft_itoa.c ft_putendl_fd.c ft_strlcat.c \
 		ft_strdup.c ft_isdigit.c \
 		ft_putchar_fd.c ft_strjoin.c ft_strcmp.c\
 		ft_strjoin_custom.c ft_strchr.c\
-		ft_isalpha.c ft_memmove.c\
+		ft_isalpha.c ft_memmove.c ft_isalnum.c\
 
 OBJ = $(FCT:.c=.o)
 
