@@ -22,7 +22,7 @@ void	echo(t_lexer *arg)
 	i = 1;
 	if (arg && !arg->next)
 		return (printf("\n"), (void)arg);
-	str = ft_strdup(arg->content);
+	str = arg->next->content;
 	while (arg->next)
 	{
 		if (arg->next->content[0] == '<' || arg->next->content[0] == '>' || arg->next->content[0] == '|')
@@ -32,7 +32,7 @@ void	echo(t_lexer *arg)
 		arg = arg->next;
 	}
 	s = ft_split(output, ' ');
-	if (s[1][0] == '-' && s[1][1] == 'n')
+	if (!ft_strncmp(s[1], "-n", 2))
 	{
 		i = 2;
 		while (s[i])
@@ -43,7 +43,6 @@ void	echo(t_lexer *arg)
 	}
 	else
 	{
-		str = ft_strdup(s[1]);
 		while (s[++i])
 		{
 			str = ft_strjoin(str, " ");
@@ -51,5 +50,5 @@ void	echo(t_lexer *arg)
  		}
 		printf("%s\n", str);
 	}
-	free(str);
+	ft_free_2d(s);
 }
