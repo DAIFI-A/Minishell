@@ -21,7 +21,7 @@ char	*ft_util_tilde(t_env **env, t_env **head, char *str, int *i)
 	*head = *env;
 	while (*env)
 	{
-		if (ft_strcmp((*env)->name, "HOME") == 0)
+		if (ft_strcmp((*env)->key, "HOME") == 0)
 		{
 			rtn = ft_strjoin(rtn, (*env)->value);
 			break ;

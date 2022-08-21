@@ -78,7 +78,7 @@ char	*ft_join_value(t_env *env, char **stock, char *rtn)
 {
 	while (env)
 	{
-		if (ft_strcmp((env)->name, *stock) == 0)
+		if (ft_strcmp((env)->key, *stock) == 0)
 		{
 			free(*stock);
 			*stock = ft_strdup((env)->value);

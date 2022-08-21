@@ -22,12 +22,12 @@ void	ft_sighandler(int sig)
 		rl_redisplay();
 		var.exit_status = 1;
 	}
-	else if (sig == 2 && var.id == 1 && strncmp(var.usr, "./minishell", 11))
+	else if (sig == 2 && var.id == 1 && ft_strncmp(var.usr, "./minishell", 11))
 	{
 		var.exit_status = 130;
 		printf("\n");
 	}
-	if (sig == 3 && var.id == 1 && strncmp(var.usr, "./minishell", 11))
+	if (sig == 3 && var.id == 1 && ft_strncmp(var.usr, "./minishell", 11))
 	{
 		var.exit_status = 131;
 		printf("Quit: 3");
@@ -47,13 +47,16 @@ void	ft_handle(t_env *env)
 	char	*rtn;
 	t_lexer	*lexer;
 	t_lexer	*top;
+	t_fds	fd;
 	char	*stock;
 
 	stock = NULL;
 	while (1)
 	{
 		lexer = NULL;
+		var.id = 0;
 		rtn = readline("MiniShell>$");
+		var.usr = rtn;
 		if (rtn == NULL)
 			return (free(rtn), ft_control_d());
 		add_history(rtn);
@@ -61,15 +64,19 @@ void	ft_handle(t_env *env)
 		top = lexer;
 		ft_expand(&lexer, env);
 		ft_parser(&lexer);
-		while (top)
-		{
-			printf("cmd = %s\n", top->content);
-			top = top->next;
-		}
+		check_cmd(&env, lexer, &fd);
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
 		free(rtn);
 	}
+}
+
+void    ft_init_global(void)
+{
+    var.exit_status = 0;
+    var.id = 0;
+    var.cpid = 0;
+    var.usr = NULL;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -80,6 +87,7 @@ int	main(int ac, char **av, char **envp)
 	ft_header();
 	(void)ac;
 	(void)av;
+	ft_init_global();
 	signal(2, ft_sighandler);
 	rl_catch_signals = 0;
 	signal(3, ft_sighandler);

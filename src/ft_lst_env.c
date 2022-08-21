@@ -30,17 +30,16 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	*lst = tmp;
 }
 
-t_env	*ft_lstnew_env(char *name, char *value, int yes)
+t_env	*ft_lstnew_env(char *name, char *value)
 {
 	t_env	*node;
 
 	node = (t_env *)malloc(sizeof(t_env));
 	if (node == NULL)
 		return (NULL);
-	node->name = ft_strdup(name);
+	node->key = ft_strdup(name);
 	if (value)
 		node->value = ft_strdup(value);
-	node->yes = yes;
 	node->next = NULL;
 	return (node);
 }
@@ -52,7 +51,7 @@ void	ft_free_lst_env(t_env **head)
 	while ((*head))
 	{
 		free((*head)->value);
-		free((*head)->name);
+		free((*head)->key);
 		tmp = (*head)->next;
 		free((*head));
 		(*head) = tmp;

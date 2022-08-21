@@ -13,13 +13,20 @@
 #ifndef MINI_H
 # define MINI_H
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-# include "libft/libft.h"
+# include <sys/types.h>
 # include <signal.h>
+# include <sys/stat.h>
+# include <paths.h>
+# include <sys/wait.h>
+# include <sys/signal.h>
+# include <fcntl.h>
+# include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
+# include <stddef.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include "libft/libft.h"
 
 struct s_global
 {
@@ -28,6 +35,13 @@ struct s_global
 	int		exit_status;
 	char	*usr;
 } var;
+
+typedef struct fds
+{
+	int		in;
+	int		out;
+	int		*fd;
+}	t_fds;
 
 typedef struct lexer{
 	char			*content;
@@ -38,7 +52,7 @@ typedef struct lexer{
 
 typedef struct environment
 {
-	char				*name;
+	char				*key;
 	char				*value;
 	int					index;
 	int					yes;
@@ -91,8 +105,38 @@ char	*ft_qutes_util(char *str, char *rtn, int *i);
 //node
 void	ft_free_lst_env(t_env **head);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
-t_env	*ft_lstnew_env(char *name, char *value, int yes);
+t_env	*ft_lstnew_env(char *name, char *value);
 void	ft_free_lst(t_lexer **head);
 void	ft_lstadd_back(t_lexer **lst, t_lexer *new);
 t_lexer	*ft_lstnew(char *content, int linked);
+//execution
+void	cd_home(t_env *env);
+int		check_type(char *arg);
+void	builting(t_env **env, t_lexer *arg);
+void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str);
+void	check_cmd(t_env **env, t_lexer *arg, t_fds *fd);
+void	pwd_env(void);
+char	*get_path(char *cmd);
+void	unset_env(t_env **env, t_lexer *arg);
+t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg);
+void	free_env(t_env *env);
+void	echo(t_lexer *arg);
+void	export_env(t_env **env, t_lexer *arg);
+void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst);
+void	cd(t_env *env, t_lexer *arg);
+t_env	*ft_lst_new1(char *key, char *value);
+void	ft_lstadd_back_prime(t_env **lst, t_env *node);
+char	*get_keys(char *str, int c);
+void	env_env(t_env *env);
+void	execute_pipe(t_env *env, t_lexer *arg, t_fds *fds, int i);
+t_lexer	*ft_lst_new_prime(char *str);
+void	content_handler(t_lexer **arg, t_env **env, t_fds *fds);
+void	execute_redir(t_lexer *arg, t_env **env, t_fds *fds, char *str);
+int		her_doc(t_lexer *arg);
+char	*get_next_line(int fd);
+void	update_pwd(t_env **lst, char *home);
+int		ft_multiple_check(char *arg);
+void	ft_print_exported(t_env **env);
+void	ft_add_export(char *str, t_env **env);
+void	ft_sort_env(t_env **env);
 #endif
