@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 12:54:37 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/15 16:33:25 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:26:15 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,18 @@ t_env	*ft_lstnew_env(char *name, char *value, int yes)
 	node->yes = yes;
 	node->next = NULL;
 	return (node);
+}
+
+void	ft_free_lst_env(t_env **head)
+{
+	t_env		*tmp;
+
+	while ((*head))
+	{
+		free((*head)->value);
+		free((*head)->name);
+		tmp = (*head)->next;
+		free((*head));
+		(*head) = tmp;
+	}
 }

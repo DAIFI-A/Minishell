@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 09:31:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/12 16:20:50 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:35:21 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ void	ft_expand(t_lexer **lexer, t_env *env)
 			&& (ft_find_char((*lexer)->content, '~') == 0))
 		{
 			tmp = ft_tilde((*lexer)->content, env);
+			(*lexer)->content = ft_strdup(tmp);
+			free(tmp);
+		}
+		if ((*lexer)->ch != '\'' && (ft_find_staus((*lexer)->content) == 0))
+		{
+			tmp = ft_expand_status((*lexer)->content);
 			(*lexer)->content = ft_strdup(tmp);
 			free(tmp);
 		}

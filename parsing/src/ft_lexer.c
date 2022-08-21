@@ -5,77 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 15:35:27 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/12 08:45:21 by med-doba         ###   ########.fr       */
+/*   Created: 2022/08/20 15:59:27 by med-doba          #+#    #+#             */
+/*   Updated: 2022/08/20 17:56:19 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	ft_skip_withespace(char *str, int i)
+void	*ft_lexer(t_lexer **lexer, char *str, char **stock)
 {
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-	return (i);
-}
-
-int	ft_utils_pipe(char *str)
-{
-	int	i;
-
-	i = 0;
-	i = ft_skip_withespace(str, i);
-	if (str[i] == '|')
-	{
-		ft_putendl_fd("Error: syntax `|'", 2);
-		return (1);
-	}
-	i = ft_strlen(str);
-	i--;
-	while (str[i] == ' ' || str[i] == '\t')
-		i--;
-	if (str[i] == '|')
-	{
-		ft_putendl_fd("Error: > ...", 2);
-		return (1);
-	}
-	return (0);
-}
-
-char	*ft_char_to_str(char c)
-{
-	char	*str;
-
-	str = (char *)malloc(sizeof(char) * 2);
-	str[0] = c;
-	str[1] = '\0';
-	return (str);
-}
-
-int	ft_check_case(char c)
-{
-	if (c == '\0')
-		return (-1);
-	else if (c == '<' || c == '>' || c == '|')
-		return (1);
-	else if (c == ' ' || c == '\t')
-		return (2);
-	else if (c == '"' || c == '\'')
-		return (3);
-	else
-		return (0);
-}
-
-int	ft_find_char(char *str, char c)
-{
-	int	i;
+	int		i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == c)
-			return (0);
-		i++;
+		i = ft_skip_withespace(str, i);
+		if (ft_check_case(str[i]) == 0 || ft_check_case(str[i]) == 3)
+		{
+			if (ft_string(lexer, stock, str, &i) == 1)
+				return (ft_free_lst(lexer), NULL);
+		}
+		else if (str[i] == '|')
+		{
+			if (ft_pipe(stock, str, &i, lexer) == 1)
+				return (ft_free_lst(lexer), NULL);
+		}
+		else if (str[i] == '<' || str[i] == '>')
+		{
+			if (ft_redirection(stock, str, &i, lexer) == 1)
+				return (ft_free_lst(lexer), NULL);
+		}
+		else if (str[i] != '\0')
+			i++;
 	}
-	return (1);
+	return (NULL);
+}
+
+int	ft_pipe(char **stock, char *str, int *i, t_lexer **lexer)
+{
+	*stock = ft_scan_pipe(str, str[*i], i);
+	if (*stock == NULL)
+		return (1);
+	ft_add_node(lexer, stock, 0, 0);
+	return (0);
+}
+
+int	ft_redirection(char **stock, char *str, int *i, t_lexer **lexer)
+{
+	*stock = ft_scan_redirection(str, i, str[*i]);
+	if (*stock == NULL)
+		return (1);
+	ft_add_node(lexer, stock, 0, 0);
+	return (0);
 }

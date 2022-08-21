@@ -6,61 +6,40 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/15 16:22:47 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/21 10:54:45 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	exit_status = 0;
-
 void	ft_sighandler(int sig)
 {
-	if (sig == 2)
+	if (sig == 2 && var.id == 0)
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		var.exit_status = 1;
 	}
-	else if (sig == 3)
+	else if (sig == 2 && var.id == 1 && strncmp(var.usr, "./minishell", 11))
 	{
-		return ;
+		var.exit_status = 130;
+		printf("\n");
+	}
+	if (sig == 3 && var.id == 1 && strncmp(var.usr, "./minishell", 11))
+	{
+		var.exit_status = 131;
+		printf("Quit: 3");
+		printf("\n");
 	}
 }
 
-int	ft_buffer(char *buff)
+void	ft_control_d(void)
 {
-	if (buff == NULL)
-		return (1);
-	return (0);
-}
-
-void	ft_free_lst(t_lexer **head)
-{
-	t_lexer		*tmp;
-
-	while ((*head))
-	{
-		free((*head)->content);
-		tmp = (*head)->next;
-		free((*head));
-		(*head) = tmp;
-	}
-}
-
-void	ft_free_lst_env(t_env **head)
-{
-	t_env		*tmp;
-
-	while ((*head))
-	{
-		free((*head)->value);
-		free((*head)->name);
-		tmp = (*head)->next;
-		free((*head));
-		(*head) = tmp;
-	}
+	printf("\033[11C\033[1A exit\n");
+	var.exit_status = 0;
+	exit(0);
 }
 
 void	ft_handle(t_env *env)
@@ -70,56 +49,27 @@ void	ft_handle(t_env *env)
 	t_lexer	*top;
 	char	*stock;
 
+	stock = NULL;
 	while (1)
 	{
 		lexer = NULL;
 		rtn = readline("MiniShell>$");
 		if (rtn == NULL)
-		{
-			printf("exit\n");
-			free(rtn);
-			return ;
-		}
+			return (free(rtn), ft_control_d());
 		add_history(rtn);
-		ft_parser(&lexer, rtn, &stock);
-		ft_expand(&lexer, env);
+		ft_lexer(&lexer, rtn, &stock);
 		top = lexer;
-		if (lexer != NULL)
+		ft_expand(&lexer, env);
+		ft_parser(&lexer);
+		while (top)
 		{
-			if (ft_strcmp(lexer->content, "env") == 0)
-				ft_env(env);
-			if (ft_strcmp(lexer->content, "pwd") == 0)
-				ft_pwd();
-			if (ft_strcmp(lexer->content, "exit") == 0)
-			{
-				if (lexer->next == NULL)
-				{
-					printf("Exit\n");
-					exit(exit_status);
-				}
-				else
-					ft_exit(lexer->next->content);
-			}
-			if (ft_strcmp(lexer->content, "export") == 0)
-			{
-				if (!lexer->next)
-					ft_export(&env, NULL);
-				else
-					ft_export(&env, lexer->next->content);
-			}
-			lexer = lexer->next;
-		}
-		lexer = top;
-		// while (lexer)
-		// {
-		// 	printf("%s\n", lexer->content);
-		// 	// printf("%s\n", lexer->next->content);
-		// 	lexer = lexer->next;
-		// }
+			printf("cmd = %s\n", top->content);
+			top = top->next;
 		}
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
 		free(rtn);
+	}
 }
 
 int	main(int ac, char **av, char **envp)

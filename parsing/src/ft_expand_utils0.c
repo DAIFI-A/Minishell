@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 09:17:21 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/11 09:48:09 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:53:32 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ int	ft_if_condition(char c)
 		return (0);
 	else
 		return (1);
+}
+
+int	ft_find_char(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (0);
+		i++;
+	}
+	return (1);
 }
