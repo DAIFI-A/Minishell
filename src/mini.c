@@ -71,12 +71,12 @@ void	ft_handle(t_env *env)
 	}
 }
 
-void    ft_init_global(void)
+void	ft_init_global(void)
 {
-    var.exit_status = 0;
-    var.id = 0;
-    var.cpid = 0;
-    var.usr = NULL;
+	var.exit_status = 0;
+	var.id = 0;
+	var.cpid = 0;
+	var.usr = NULL;
 }
 
 int	main(int ac, char **av, char **envp)

@@ -30,5 +30,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(ptr, s1, y);
 	ft_strlcat(ptr, s2, t);
 	free((void *)s1);
- 	return (ptr);
+	return (ptr);
 }

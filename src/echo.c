@@ -27,8 +27,8 @@ void	echo(t_lexer *arg)
 	{
 		if (arg->next->content[0] == '<' || arg->next->content[0] == '>' || arg->next->content[0] == '|')
 			break ;
-		output = ft_strjoin(output, " ");
-		output = ft_strjoin(output, arg->next->content);
+		output = ft_strjoin_custom(output, " ");
+		output = ft_strjoin_custom(output, arg->next->content);
 		arg = arg->next;
 	}
 	s = ft_split(output, ' ');

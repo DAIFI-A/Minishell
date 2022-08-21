@@ -52,8 +52,8 @@ void	content_handler(t_lexer **arg, t_env **env, t_fds *fds)
 		else if (!ft_strcmp((*arg)->content, "<<"))
 		{
 			(*arg) = (*arg)->next;
-			close(fds->out);
-			dup2(fds->out, her_doc((*arg)));
+			close(fds->in);
+			fds->in = her_doc((*arg));
 		}
 		else if (!ft_strcmp((*arg)->content, ">"))
 		{

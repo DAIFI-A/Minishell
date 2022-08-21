@@ -30,5 +30,6 @@ int	her_doc(t_lexer *arg)
 			return (tmp);
 		write(tmp, s, ft_strlen(s));
 	}
+	free(s);
 	return (tmp);
 }
