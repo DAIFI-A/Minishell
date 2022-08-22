@@ -18,23 +18,26 @@ void	echo(t_lexer *arg)
 	char	*str;
 	char	**s;
 	int		i;
+	int		k;
 
 	i = 1;
 	if (arg && !arg->next)
-		return (printf("\n"), (void)arg);
+		return (ft_putendl_fd("", 1));
 	str = arg->next->content;
 	while (arg->next)
 	{
-		if (arg->next->content[0] == '<' || arg->next->content[0] == '>' || arg->next->content[0] == '|')
-			break ;
+		if (ft_multiple_check(arg->next->content) == 2)
+			return ;
 		output = ft_strjoin_custom(output, " ");
-		output = ft_strjoin_custom(output, arg->next->content);
+		output = ft_strjoin(output, arg->next->content);
 		arg = arg->next;
 	}
 	s = ft_split(output, ' ');
-	if (!ft_strncmp(s[1], "-n", 2))
+	free(output);
+	k = check_newline(s);
+	if (k != 1)
 	{
-		i = 2;
+		i = k;
 		while (s[i])
 		{
 			printf("%s ", s[i]);
@@ -51,4 +54,23 @@ void	echo(t_lexer *arg)
 		printf("%s\n", str);
 	}
 	ft_free_2d(s);
+}
+
+int	check_newline(char **str)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = 1;
+	k = 1;
+	j = 1;
+	while (str[i])
+	{
+		if (str[i][0] == '-' && str[i][j] == 'n')
+			k++;
+		i++;
+		j++;
+	}
+	return (k);
 }

@@ -121,6 +121,7 @@ void	unset_env(t_env **env, t_lexer *arg);
 t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg);
 void	free_env(t_env *env);
 void	echo(t_lexer *arg);
+int		check_newline(char **str);
 void	export_env(t_env **env, t_lexer *arg);
 void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst);
 void	cd(t_env *env, t_lexer *arg);
