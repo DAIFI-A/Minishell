@@ -68,9 +68,9 @@ void	check_cmd(t_env **env, t_lexer *arg, t_fds *fds)
 		return ;
 	var.id = 0;
 	tmp = arg;
-	while (tmp->next)
+	while (tmp)
 	{
-		if (!ft_strcmp(tmp->content, "|"))
+		if (!ft_strcmp(tmp->content, "|") && tmp->ch != '"' && tmp->ch != '\'')
 			i++;
 		tmp = tmp->next;
 	}

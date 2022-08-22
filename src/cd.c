@@ -16,9 +16,11 @@ void	cd_home(t_env *env)
 {
 	t_env	*lst;
 	char	*home;
+	char	oldpwd[1024];
 
 	lst = env;
 	home = NULL;
+	getcwd(oldpwd, 1024);
 	while (env)
 	{
 		if (!ft_strcmp(env->key, "HOME"))
@@ -32,17 +34,16 @@ void	cd_home(t_env *env)
 		return (var.exit_status = 1, ft_putendl_fd("Home not set", 2));
 	else
 		chdir(home);
-	update_pwd(&lst, home);
+	update_pwd(&lst, oldpwd);
 }
 
 void	cd(t_env *env, t_lexer *arg)
 {
 	t_env	*lst;
-	char	cwd[1024];
-	char	*oldpwd;
+	char	oldpwd[1024];
 
 	lst = env;
-	oldpwd = getcwd(cwd, sizeof(cwd));
+	getcwd(oldpwd, 1024);
 	if (!arg->next || ft_multiple_check(arg->next->content) == 2)
 		cd_home(env);
 	while (arg->next)
@@ -59,7 +60,6 @@ void	cd(t_env *env, t_lexer *arg)
 void	update_pwd(t_env **lst, char *home)
 {
 	char	*old_pwd;
-	char	cwd[1024];
 	t_env	*env;
 
 	env = (*lst);
@@ -68,7 +68,7 @@ void	update_pwd(t_env **lst, char *home)
 	{
 		if (!ft_strcmp((*lst)->key, "PWD"))
 		{
-			(*lst)->value = getcwd(cwd, sizeof(cwd));
+			getcwd((*lst)->value, 1024);
 			break ;
 		}
 		(*lst) = (*lst)->next;
@@ -77,7 +77,8 @@ void	update_pwd(t_env **lst, char *home)
 	{
 		if (!ft_strcmp(env->key, "OLDPWD"))
 		{
-			env->value = old_pwd;
+			free(env->value);
+			env->value = ft_strdup(old_pwd);
 			break ;
 		}
 		env = env->next;

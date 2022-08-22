@@ -26,12 +26,14 @@ t_env	*ft_environment(char **envp, t_env *env)
 {
 	t_env	*node;
 	int		i;
+	char	pwd[1024];
 
 	i = 0;
 	node = env;
 	if (envp[0] == NULL)
 	{
-		node = ft_lstnew_env("PWD", getcwd(NULL, 0));
+		getcwd(pwd, 1024);
+		node = ft_lstnew_env("PWD", pwd);
 		ft_lstadd_back_env(&env, node);
 		node = ft_lstnew_env("SHLVL", "1");
 		ft_lstadd_back_env(&env, node);

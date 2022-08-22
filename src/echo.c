@@ -23,12 +23,13 @@ void	echo(t_lexer *arg)
 	i = 1;
 	if (arg && !arg->next)
 		return (ft_putendl_fd("", 1));
-	str = arg->next->content;
+	str = ft_strdup(arg->next->content);
+	output = ft_strdup(arg->next->content);
 	while (arg->next)
 	{
 		if (ft_multiple_check(arg->next->content) == 2)
 			return ;
-		output = ft_strjoin_custom(output, " ");
+		output = ft_strjoin(output, " ");
 		output = ft_strjoin(output, arg->next->content);
 		arg = arg->next;
 	}
@@ -53,6 +54,7 @@ void	echo(t_lexer *arg)
  		}
 		printf("%s\n", str);
 	}
+	free(str);
 	ft_free_2d(s);
 }
 

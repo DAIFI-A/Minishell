@@ -20,18 +20,19 @@ char	*get_path(char *cmd)
 	char	*tmp;
 
 	i = 0;
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
 	paths = ft_split(_PATH_DEFPATH, ':');
 	while (paths[i])
 	{
-		tmp = ft_strjoin(paths[i], "/");
+		tmp = ft_strjoin_custom(paths[i], "/");
 		path = ft_strjoin(tmp, cmd);
 		if (path == NULL)
-			return (NULL);
-		if (access(path, F_OK) == 0)
-			return (path);
+			return (ft_free_2d(paths), free(tmp), NULL);
+		if (access(path, F_OK | X_OK) == 0)
+			return (ft_free_2d(paths), path);
 		i++;
 	}
-	return (0);
+	ft_free_2d(paths);
+	return (NULL);
 }

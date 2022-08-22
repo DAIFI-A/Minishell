@@ -27,7 +27,10 @@ int	her_doc(t_lexer *arg)
 	{
 		s = get_next_line(0);
 		if (s == NULL || !ft_strcmp(s, arg->content))
-			return (free(s), tmp);
+		{
+			free(s);
+			return (tmp);
+		}
 		write(tmp, s, ft_strlen(s));
 	}
 	free(s);
