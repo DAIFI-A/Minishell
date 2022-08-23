@@ -38,17 +38,18 @@ char	*redirection_handler(t_lexer **arg, t_fds *fds, char *str)
 	i = 0;
 	while ((*arg) && ft_strcmp((*arg)->content, "|"))
 	{
-		if (!ft_strncmp((*arg)->content, "<", 1))
+		if (!ft_strcmp((*arg)->content, "<<"))
 		{
 			(*arg) = (*arg)->next;
 			close(fds->in);
-			if (!ft_strcmp((*arg)->content, "<<"))
-			{
-				fds->in = her_doc((*arg));
-				i = 1;
-			}
-			else
-				fds->in = open((*arg)->content, O_RDWR, 0777);
+			fds->in = her_doc((*arg));
+			i = 1;
+		}
+		else if (!ft_strcmp((*arg)->content, "<"))
+		{
+			(*arg) = (*arg)->next;
+			close(fds->in);
+			fds->in = open((*arg)->content, O_RDWR, 0777);
 		}
 		else if (!ft_strncmp((*arg)->content, ">", 1))
 		{
@@ -129,7 +130,7 @@ void	execute(char **cmd, t_env **env)
 
 	stat = 0;
 	var.cpid = fork();
-	var.id += 1;
+	var.id = 1;
 	if (var.cpid < 0)
 		return (var.exit_status = 1, ft_putendl_fd("fork error", 2), ft_free_2d(cmd));
 	if (var.cpid == 0)

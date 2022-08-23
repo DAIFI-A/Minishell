@@ -89,8 +89,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	ft_init_global();
 	signal(2, ft_sighandler);
-	rl_catch_signals = 0;
 	signal(3, ft_sighandler);
+	rl_catch_signals = 0;
 	env = ft_environment(envp, env);
 	ft_handle(env);
 	ft_free_lst_env(&env);

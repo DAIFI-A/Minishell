@@ -51,7 +51,10 @@ void	cd(t_env *env, t_lexer *arg)
 		if (ft_multiple_check(arg->next->content) == 2)
 			break ;
 		if (chdir(arg->next->content))
-			return (var.exit_status = 1, ft_putendl_fd("No such file or directory", 2));
+		{
+			var.exit_status = 1;
+			return (ft_putendl_fd("No such file or directory", 2));
+		}
 		update_pwd(&lst, oldpwd);
 		arg = arg->next;
 	}
@@ -68,19 +71,19 @@ void	update_pwd(t_env **lst, char *home)
 	{
 		if (!ft_strcmp((*lst)->key, "PWD"))
 		{
-			getcwd((*lst)->value, 1024);
+			(*lst)->value = ft_strdup(getcwd(NULL, 0));
 			break ;
 		}
 		(*lst) = (*lst)->next;
 	}
-	while (env)
+	*lst = env;
+	while ((*lst))
 	{
-		if (!ft_strcmp(env->key, "OLDPWD"))
+		if (!ft_strcmp((*lst)->key, "OLDPWD"))
 		{
-			free(env->value);
-			env->value = ft_strdup(old_pwd);
+			(*lst)->value = ft_strdup(home);
 			break ;
 		}
-		env = env->next;
+		(*lst) = (*lst)->next;
 	}
 }

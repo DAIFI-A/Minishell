@@ -66,7 +66,6 @@ void	check_cmd(t_env **env, t_lexer *arg, t_fds *fds)
 	i = 0;
 	if (!arg)
 		return ;
-	var.id = 0;
 	tmp = arg;
 	while (tmp)
 	{

@@ -20,8 +20,7 @@ void	ft_expand(t_lexer **lexer, t_env *env)
 	head = (*lexer);
 	while ((*lexer))
 	{
-		if ((*lexer)->ch != '\'' && ((*lexer)->ch != '"'
-				|| (ft_find_char((*lexer)->content, '$') == 0)))
+		if ((*lexer)->ch != '\'' && (ft_find_char((*lexer)->content, '$') == 0))
 		{
 			tmp = ft_parse_expand((*lexer)->content, env);
 			(*lexer)->content = ft_strdup(tmp);
