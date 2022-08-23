@@ -21,7 +21,7 @@ void	echo(t_lexer *arg)
 	int		k;
 
 	i = 1;
-	if (arg && !arg->next)
+	if (arg && (!arg->next || !ft_strcmp(arg->next->content, "\0")))
 		return (ft_putendl_fd("", 1));
 	str = ft_strdup(arg->next->content);
 	output = ft_strdup(arg->next->content);

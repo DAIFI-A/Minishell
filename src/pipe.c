@@ -36,7 +36,7 @@ char	*redirection_handler(t_lexer **arg, t_fds *fds, char *str)
 	int		i;
 
 	i = 0;
-	while ((*arg) && ft_strcmp((*arg)->content, "|"))
+	while ((*arg) && (ft_strcmp((*arg)->content, "|") || (*arg)->ch == '"' || (*arg)->ch == '\''))
 	{
 		if (!ft_strcmp((*arg)->content, "<<"))
 		{
