@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:06:13 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/23 23:22:43 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/24 13:07:43 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_path(char *cmd)
 	i = 0;
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
-	paths = ft_split(_PATH_DEFPATH, ':');
+	paths = ft_split(_PATH_STDPATH, ':');
 	while (paths[i])
 	{
 		tmp = ft_strjoin_custom(paths[i], "/");

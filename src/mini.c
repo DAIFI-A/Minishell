@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/23 23:29:07 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/24 14:35:07 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	main(int ac, char **av, char **envp)
 	ft_init_global();
 	signal(2, ft_sighandler);
 	signal(3, ft_sighandler);
-	rl_catch_signals = 0;
 	env = ft_environment(envp, env);
 	ft_handle(env);
 	ft_free_lst_env(&env);

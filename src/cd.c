@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:55:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/18 10:02:22 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/24 12:15:33 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	update_pwd(t_env **lst, char *home)
 	{
 		if (!ft_strcmp((*lst)->key, "PWD"))
 		{
-			(*lst)->value = ft_strdup(getcwd(NULL, 0));
+			getcwd((*lst)->value, 1024);
 			break ;
 		}
 		(*lst) = (*lst)->next;
@@ -81,6 +81,7 @@ void	update_pwd(t_env **lst, char *home)
 	{
 		if (!ft_strcmp((*lst)->key, "OLDPWD"))
 		{
+			free((*lst)->value);
 			(*lst)->value = ft_strdup(home);
 			break ;
 		}
