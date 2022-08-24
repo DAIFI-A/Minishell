@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/24 14:35:07 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/24 21:11:36 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ft_handle(t_env *env)
 		check_cmd(&env, lexer, &fd);
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
-		ft_free_lst(&lexer);
 		free(rtn);
 	}
 }

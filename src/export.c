@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:00:32 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/18 08:23:37 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:48:00 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,12 @@ void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst)
 	while ((*env) && arg->next)
 	{
 		key = get_keys(arg->next->content, '=');
-		if (ft_multiple_check(arg->next->content) == 2)
-			break ;
-		else if (!key || (ft_multiple_check(key) == 1 && ft_strcmp(key, "_")))
+		if (ft_multiple_check(key) == 2)
+		{
+			arg = arg->next->next->next;
+			key = get_keys(arg->content, '=');
+		}
+		if (!key || (ft_multiple_check(key) == 1 && ft_strcmp(key, "_")))
 			return (var.exit_status = 1, ft_putendl_fd("Error: export", 2));
 		if (!ft_strcmp(key, (*env)->key))
 		{

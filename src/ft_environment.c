@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_environment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 10:57:18 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/15 16:18:44 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:33:42 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_env	*ft_environment(char **envp, t_env *env)
 	{
 		getcwd(pwd, 1024);
 		node = ft_lstnew_env("PWD", pwd);
+		ft_lstadd_back_env(&env, node);
+		node = ft_lstnew_env("OLDPWD", "");
 		ft_lstadd_back_env(&env, node);
 		node = ft_lstnew_env("SHLVL", "1");
 		ft_lstadd_back_env(&env, node);
