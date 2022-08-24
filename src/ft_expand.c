@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 09:31:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/21 12:35:21 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:15:42 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,9 @@ void	ft_expand(t_lexer **lexer, t_env *env)
 		}
 		if ((*lexer)->ch != '"' && (*lexer)->ch != '\''
 			&& (ft_find_char((*lexer)->content, '~') == 0))
-		{
-			tmp = ft_tilde((*lexer)->content, env);
-			(*lexer)->content = ft_strdup(tmp);
-			free(tmp);
-		}
+			(*lexer)->content = ft_strdup(ft_tilde((*lexer)->content, env));
 		if ((*lexer)->ch != '\'' && (ft_find_staus((*lexer)->content) == 0))
-		{
-			tmp = ft_expand_status((*lexer)->content);
-			(*lexer)->content = ft_strdup(tmp);
-			free(tmp);
-		}
+			(*lexer)->content = ft_expand_status((*lexer)->content);
 		(*lexer) = (*lexer)->next;
 	}
 	(*lexer) = head;

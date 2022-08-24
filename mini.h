@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/21 12:37:57 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:30:45 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct fds
 	int		in;
 	int		out;
 	int		*fd;
+	int		flag;
 }	t_fds;
 
 typedef struct lexer{
@@ -121,19 +122,25 @@ void	unset_env(t_env **env, t_lexer *arg);
 t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg);
 void	free_env(t_env *env);
 void	echo(t_lexer *arg);
+char	**join_echo(t_lexer **arg);
+void	echo_newline(char **s);
 int		check_newline(char **str);
 void	export_env(t_env **env, t_lexer *arg);
 void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst);
 void	cd(t_env *env, t_lexer *arg);
 t_env	*ft_lst_new1(char *key, char *value);
+t_lexer	*ft_lst_new_prime(char *str);
 void	ft_lstadd_back_prime(t_env **lst, t_env *node);
 char	*get_keys(char *str, int c);
 void	env_env(t_env *env);
+char	**env_str(t_env *env);
 void	execute_pipe(t_env *env, t_lexer *arg, t_fds *fds, int i);
 void	pipe_handler(t_fds *fds, t_lexer *arg, t_env *env, int i);
-t_lexer	*ft_lst_new_prime(char *str);
 void	content_handler(t_lexer **arg, t_env **env, t_fds *fds);
 void	execute_redir(t_lexer *arg, t_env **env, t_fds *fds, char *str);
+char	*redirection_handler(t_lexer **arg, t_fds *fds, char *str);
+void	input(t_lexer **arg, t_fds *fds);
+void	output(t_lexer **arg, t_fds *fds);
 void	execute(char **cmd, t_env **env);
 int		her_doc(t_lexer *arg);
 char	*get_next_line(int fd);

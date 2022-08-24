@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:34:05 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/21 10:54:45 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:29:07 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_handle(t_env *env)
 		check_cmd(&env, lexer, &fd);
 		if (lexer != NULL)
 			ft_free_lst(&lexer);
+		ft_free_lst(&lexer);
 		free(rtn);
 	}
 }

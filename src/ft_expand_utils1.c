@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 12:36:33 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/21 12:37:47 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:23:47 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,5 @@ char	*ft_expand_status(char *str)
 			i++;
 		}
 	}
-	free(status);
-	free(str);
-	return (rtn);
+	return (free(status), free(str), rtn);
 }

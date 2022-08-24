@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:20 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/18 09:32:47 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:43:26 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,7 @@ char *get_next_line(int fd)
 	line = malloc(i + 1);
 	if (!line)
 		return (NULL);
-	i = 0;
-	while (tmp[i])
-	{
-		line[i] = tmp[i];
-		i++;
-	}
+	ft_memmove(line, tmp, strlen(tmp));
 	line[i + 1] = '\0';
 	return (line);
 }

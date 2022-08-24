@@ -3,63 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:38:47 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/17 16:15:36 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/24 00:19:33 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include"../mini.h"
-
-char	**env_str(t_env *env)
-{
-	char	*str;
-	char	**envp;
-
-	str = ft_strdup("");
-	while (env)
-	{
-		str = ft_strjoin(str, env->key);
-		str = ft_strjoin(str, "=");
-		str = ft_strjoin(str, env->value);
-		str = ft_strjoin(str, "$");
-		env = env->next;
-	}
-	envp = ft_split(str, '$');
-	free(str);
-	return(envp);
-}
+#include"../mini.h"
 
 char	*redirection_handler(t_lexer **arg, t_fds *fds, char *str)
 {
-	int		i;
-
-	i = 0;
-	while ((*arg) && (ft_strcmp((*arg)->content, "|") || (*arg)->ch == '"' || (*arg)->ch == '\''))
+	fds->flag = 0;
+	while ((*arg) && (ft_strcmp((*arg)->content, "|")
+			|| (*arg)->ch == '"' || (*arg)->ch == '\''))
 	{
-		if (!ft_strcmp((*arg)->content, "<<"))
-		{
-			(*arg) = (*arg)->next;
-			close(fds->in);
-			fds->in = her_doc((*arg));
-			i = 1;
-		}
-		else if (!ft_strcmp((*arg)->content, "<"))
-		{
-			(*arg) = (*arg)->next;
-			close(fds->in);
-			fds->in = open((*arg)->content, O_RDWR, 0777);
-		}
+		if (!ft_strncmp((*arg)->content, "<", 1))
+			input(arg, fds);
 		else if (!ft_strncmp((*arg)->content, ">", 1))
-		{
-			(*arg) = (*arg)->next;
-			close(fds->out);
-			if (!ft_strcmp((*arg)->content, ">>"))
-				fds->out = open((*arg)->content, O_APPEND | O_CREAT | O_WRONLY, 00777);
-			else
-				fds->out = open((*arg)->content, O_CREAT | O_WRONLY | O_TRUNC, 00777);
-		}
+			output(arg, fds);
 		else
 		{
 			str = ft_strjoin(str, (*arg)->content);
@@ -67,7 +29,7 @@ char	*redirection_handler(t_lexer **arg, t_fds *fds, char *str)
 		}
 		(*arg) = (*arg)->next;
 	}
-	if (i == 1)
+	if (fds->flag == 1)
 		str = ft_strjoin(str, "tmp");
 	return (str);
 }
@@ -130,14 +92,21 @@ void	execute(char **cmd, t_env **env)
 
 	stat = 0;
 	var.cpid = fork();
-	var.id = 1;
 	if (var.cpid < 0)
-		return (var.exit_status = 1, ft_putendl_fd("fork error", 2), ft_free_2d(cmd));
+	{
+		var.exit_status = 1;
+		return (ft_putendl_fd("fork error", 2), ft_free_2d(cmd));
+	}
+	var.id = 1;
 	if (var.cpid == 0)
 	{
 		envp = env_str(*env);
-		if (execve(get_path(cmd[0]), cmd, envp) == -1 || get_path(cmd[0]) == NULL)
-			return (ft_putendl_fd("command not found", 2), ft_free_2d(cmd), exit(127));
+		if (execve(get_path(cmd[0]), cmd, envp) == -1 || !get_path(cmd[0]))
+		{
+			ft_free_2d(envp);
+			ft_free_2d(cmd);
+			return (ft_putendl_fd("command not found", 2), exit(127));
+		}
 		ft_free_2d(envp);
 	}
 	wait(&stat);
@@ -161,12 +130,9 @@ void	execute_pipe(t_env *env, t_lexer *arg, t_fds *fds, int i)
 	}
 	i = i + 1;
 	pipe_handler(fds, arg, env, i);
-	j = 0;
-	while (j < i + 1)
-	{
+	j = -1;
+	while (++j < i + 1)
 		close(fds->fd[(j - 1) * 2]);
-		j++;
-	}
 	dup2(tmp_in, STDIN_FILENO);
 	dup2(tmp_out, STDOUT_FILENO);
 	close(tmp_in);
@@ -174,33 +140,4 @@ void	execute_pipe(t_env *env, t_lexer *arg, t_fds *fds, int i)
 	close(fds->in);
 	close(fds->out);
 	free(fds->fd);
-}
-
-void	pipe_handler(t_fds *fds, t_lexer *arg, t_env *env, int i)
-{
-	int		j;
-
-	j = -1;
-	while (arg && ++j < i)
-	{
-		if (j == 0)
-		{
-			fds->in = dup(0);
-			fds->out =  dup(fds->fd[(j * 2) + 1]);
-		}
-		else if (j < i && j != i - 1)
-		{
-			fds->out = dup(fds->fd[(j * 2) + 1]);
-			fds->in = dup(fds->fd[(j - 1) * 2]);
-		}
-		else if (j == i - 1)
-		{
-			fds->in = dup(fds->fd[(j - 1) * 2]);
-			fds->out = dup(1);
-		}
-		content_handler(&arg, &env, fds);
-		if (arg && arg->next != NULL)
-			arg = arg->next;
-		close(fds->fd[(j * 2) + 1]);
-	}
 }
