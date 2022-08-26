@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:00:32 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/24 20:48:00 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/25 19:12:08 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	export_env(t_env **env, t_lexer *arg)
 	{
 		lst = (*env);
 		set_env_existed(env, arg, &lst);
+		if (arg->flag == 1)
+			arg = arg->next;
 		if ((*env) == NULL)
 		{
 			(*env) = lst;
@@ -49,8 +51,8 @@ void	set_env_existed(t_env **env, t_lexer *arg, t_env **lst)
 		key = get_keys(arg->next->content, '=');
 		if (ft_multiple_check(key) == 2)
 		{
-			arg = arg->next->next->next;
-			key = get_keys(arg->content, '=');
+			arg->flag = 1;
+			break ;
 		}
 		if (!key || (ft_multiple_check(key) == 1 && ft_strcmp(key, "_")))
 			return (var.exit_status = 1, ft_putendl_fd("Error: export", 2));

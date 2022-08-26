@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:38:47 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/24 00:19:33 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 02:18:25 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	execute(char **cmd, t_env **env)
 	if (var.cpid == 0)
 	{
 		envp = env_str(*env);
-		if (execve(get_path(cmd[0]), cmd, envp) == -1 || !get_path(cmd[0]))
+		if (execve(get_path(cmd[0], env), cmd, envp) == -1
+			|| !get_path(cmd[0], env))
 		{
 			ft_free_2d(envp);
 			ft_free_2d(cmd);

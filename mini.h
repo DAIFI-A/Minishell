@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/23 22:30:45 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 01:11:29 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct lexer{
 	char			*content;
 	char			ch;
 	int				linked;
+	int				flag;
 	struct lexer	*next;
 }t_lexer;
 
@@ -117,7 +118,7 @@ void	builting(t_env **env, t_lexer *arg);
 void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str);
 void	check_cmd(t_env **env, t_lexer *arg, t_fds *fd);
 void	pwd_env(void);
-char	*get_path(char *cmd);
+char	*get_path(char *cmd, t_env **env);
 void	unset_env(t_env **env, t_lexer *arg);
 t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg);
 void	free_env(t_env *env);

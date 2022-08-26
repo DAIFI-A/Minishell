@@ -18,8 +18,6 @@ SRC_DIR = ./src
 
 LIBFT = libft/libft.a
 
-G_N_T =
-
 INC= mini.h
 
 all: $(NAME)
@@ -34,8 +32,10 @@ $(OBJ_DIR):
 $(OFILES): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC)
 	@$(CC) -c $(CFLAGS) -I $(shell brew --prefix readline)/include -c $< -o $@
 
-$(LIBFT):
-	make -C libft
+$(LIBFT): force
+	@make -C libft
+
+force:
 
 clean :
 	@rm -rf $(OBJ_DIR)

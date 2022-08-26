@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 18:34:02 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/17 14:12:11 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:22:28 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ char	*ft_strchr(char *str, int c);
 int		ft_isalpha(int a);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 #endif
