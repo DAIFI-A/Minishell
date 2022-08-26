@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 17:06:13 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/26 02:17:38 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 19:10:13 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ char	*get_path(char *cmd, t_env **env)
 	i = -1;
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
-	while ((*env))
-	{
-		if (!ft_strcmp((*env)->key, "PATH"))
-			paths = ft_split((*env)->value, ':');
-		(*env) = (*env)->next;
-	}
+	paths = search_path(env);
+	if (!paths)
+		return (NULL);
 	while (paths[++i])
 	{
 		tmp = ft_strjoin_custom(paths[i], "/");
@@ -39,4 +36,18 @@ char	*get_path(char *cmd, t_env **env)
 	}
 	ft_free_2d(paths);
 	return (NULL);
+}
+
+char	**search_path(t_env **env)
+{
+	char	**paths;
+
+	paths = NULL;
+	while ((*env))
+	{
+		if (!ft_strcmp((*env)->key, "PATH"))
+			paths = ft_split((*env)->value, ':');
+		(*env) = (*env)->next;
+	}
+	return (paths);
 }

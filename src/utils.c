@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 14:30:18 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/23 21:49:03 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 18:58:40 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,12 @@ int	ft_multiple_check(char *arg)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	check_upper(char *str)
+{
+	if (str[0] >= 'A' && str[0] <= 'Z')
+		return(1);
 	return (0);
 }

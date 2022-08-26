@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 15:19:50 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/26 01:11:29 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 19:09:09 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	one_cmd(t_env **env, t_lexer *arg, char **envp, char *str);
 void	check_cmd(t_env **env, t_lexer *arg, t_fds *fd);
 void	pwd_env(void);
 char	*get_path(char *cmd, t_env **env);
+char	**search_path(t_env **env);
 void	unset_env(t_env **env, t_lexer *arg);
 t_env	*unset(t_env *env, t_env *tmp, t_lexer *arg);
 void	free_env(t_env *env);
@@ -150,4 +151,5 @@ int		ft_multiple_check(char *arg);
 void	ft_print_exported(t_env **env);
 void	ft_add_export(char *str, t_env **env);
 void	ft_sort_env(t_env **env);
+int		check_upper(char *str);
 #endif

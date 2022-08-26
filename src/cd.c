@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:55:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/24 12:15:33 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 12:57:50 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cd(t_env *env, t_lexer *arg)
 
 	lst = env;
 	getcwd(oldpwd, 1024);
-	if (!arg->next || ft_multiple_check(arg->next->content) == 2)
+	if (!arg->next ||(ft_multiple_check(arg->next->content) == 2 && arg->ch != 0))
 		cd_home(env);
 	while (arg->next)
 	{

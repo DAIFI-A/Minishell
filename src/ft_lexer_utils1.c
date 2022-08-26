@@ -6,7 +6,7 @@
 /*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:08:15 by med-doba          #+#    #+#             */
-/*   Updated: 2022/08/20 17:57:19 by med-doba         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:54:50 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	ft_string(t_lexer **lexer, char **stock, char *str, int *i)
 		while (ft_check_case(str[*i]) == 0)
 			*stock = ft_join(*stock, str[(*i)++]);
 		if (ft_check_case03(str[*i]) == 1)
-			ft_add_node(lexer, stock, ch, 1);
+			ft_add_node(lexer, stock, 0, 1);
 		else
-			ft_add_node(lexer, stock, ch, 0);
+			ft_add_node(lexer, stock, 0, 0);
 	}
 	return (0);
 }

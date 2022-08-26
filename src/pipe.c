@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: med-doba <med-doba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:38:47 by adaifi            #+#    #+#             */
-/*   Updated: 2022/08/26 02:18:25 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/08/26 19:02:51 by med-doba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*redirection_handler(t_lexer **arg, t_fds *fds, char *str)
 		}
 		(*arg) = (*arg)->next;
 	}
-	if (fds->flag == 1)
+	if (str[0] != '\0' && fds->flag == 1)
 		str = ft_strjoin(str, "tmp");
 	return (str);
 }
@@ -48,6 +48,8 @@ void	content_handler(t_lexer **arg, t_env **env, t_fds *fds)
 	tmp_in = dup(0);
 	tmp_out = dup(1);
 	str = redirection_handler(arg, fds, str);
+	if (str[0] == '\0' && fds->flag == 1)
+		return ;
 	if (*str == '\0')
 		return (printf("command not found\n"), var.exit_status = 127, free(str));
 	dup2(tmp_in, STDIN_FILENO);
@@ -91,12 +93,11 @@ void	execute(char **cmd, t_env **env)
 	int		stat;
 
 	stat = 0;
+	if (check_upper(cmd[0]))
+		return (ft_putendl_fd("command not found", 2));
 	var.cpid = fork();
 	if (var.cpid < 0)
-	{
-		var.exit_status = 1;
-		return (ft_putendl_fd("fork error", 2), ft_free_2d(cmd));
-	}
+		return (ft_putendl_fd("fork error", 2), var.exit_status = 1, ft_free_2d(cmd));
 	var.id = 1;
 	if (var.cpid == 0)
 	{
